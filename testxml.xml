@@ -1,0 +1,16 @@
+<myqmd verbosity='high'>
+   <rawdata>
+      <data mode='local' path='mypath' name='Run1'> sampletest </data>
+      <data mode='ssh' path='user@remote:mypath' name='Run2'> sampletest </data>
+   </rawdata>
+   <calcdata>
+      <gr name='H-H-gr' atom1='H' atom2='H' nbins='100' dr='0.1'> x_centroid </gr>
+   </calcdata>
+   <plots prefix='myplot'>
+      <plot title='mddata'> [temperature, potential, pressure_md] </plot>
+      <plot title='gr'> ['H-H-gr'] </plot>
+   </plots>   
+   <views>
+      <vmd> 'Run1'  </vmd>
+   </views>
+</myqmd>
