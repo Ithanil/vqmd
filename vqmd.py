@@ -1,34 +1,43 @@
 #!/usr/bin/python
 
-"""Main script from which the simulation is run.
+"""
+Main script which starts the data analysis and visualization tasks according to the given input XML file. 
+Instead vwmd can also be imported as a python module and used as library, or instead as tool by passing a XML node object as input.
 
-Deals with creation of the simulation object, reading the input file and
-initialising the system.
-
-Run using:
-      i-pi input_file.xml
-
-Where 'input_file.xml' should be replaced by the name of the xml input file from
-which the system data will be read. For a description of how the input file
-should be formatted, see the reference manual.
+As a script run it on a terminal by:
+    $ vqmd input.xml
+where 'input.xml' should be replaced by the name of the xml input file which specifies the to-be-executed tasks. 
+For an explanation of the XML input file format, see the reference documentation.
 
 Functions:
-   main: Runs the simulation.
+   main: Runs the tool standalone, by XML input file.
+   vqmd: Runs the tool after import, by XML node object.
 """
 
 from pylab import *
 from process.ipi_mddata import *
 from tools.multigraph import *
+   
+#This is what is run if the file is run as a script.
+if __name__ == '__main__':
+   import sys
+   if (len(sys.argv) != 2):
+      print("Exactly one argument expected: The input file name.")
+   else:
+      main(sys.argv[1])
 
 def main(file_name):
    from tools.xml_io import xml_parse_file
 
    ifile = open(file_name,"r")
-   xmlrestart = xml_parse_file(ifile) # Parses the file.
+   xmlin = xml_parse_file(ifile) # Parses the file.
    ifile.close()
 
-   # Checks the input and partitions it appropriately.
-   print(xmlrestart.fields[0][1].fields[0][1].fields)
+   vqmd(xmlin)
+
+def vqmd(xmlin):
+
+   print(xmlin.fields[0][1].fields[0][1].fields)
    
    print(" --- begin input file content --- ")
    ifile = open(file_name,"r")
@@ -37,7 +46,7 @@ def main(file_name):
    ifile.close()
    print(" ---  end input file content  --- ")
    
-   datafields = xmlrestart.fields[0][1].fields[0][1].fields
+   datafields = xmlin.fields[0][1].fields[0][1].fields
    
    mymddata = []
    naml = []
@@ -64,11 +73,3 @@ def main(file_name):
    multiGraphXY(ax2, potdata, xlabel='Time [fs]', ylabel='Potential Energy [H]')
 
    show()
-   
-#This is what is run if the file is run as a script.
-if __name__ == '__main__':
-   import sys
-   if (len(sys.argv) != 2):
-      print("Exactly one argument expected: The input file name.")
-   else:
-      main(sys.argv[1])
