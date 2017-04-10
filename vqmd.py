@@ -16,8 +16,9 @@ Functions:
 
 from pylab import *
 from process.ipi_mddata import *
-from tools.multigraph import *
-   
+from libs.multigraph import *
+
+
 #This is what is run if the file is run as a script.
 if __name__ == '__main__':
    import sys
@@ -27,7 +28,7 @@ if __name__ == '__main__':
       main(sys.argv[1])
 
 def main(file_name):
-   from tools.xml_io import xml_parse_file
+   from libs.xml_io import xml_parse_file
 
    ifile = open(file_name,"r")
    xmlin = xml_parse_file(ifile) # Parses the file.
