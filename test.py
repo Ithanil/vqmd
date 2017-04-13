@@ -1,4 +1,8 @@
-from vqmd import *
+from pylab import *
+
+import os
+import sys
+sys.path.insert(0, os.getcwd())
 
 import test.test1
 import test.test2
