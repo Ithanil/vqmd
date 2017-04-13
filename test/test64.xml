@@ -1,0 +1,10 @@
+<vqmd verbosity='high'>
+   <rawdata>
+      <data mode='local' path='.' name='batfix'>test64_batfix</data>
+      <data mode='local' path='.' name='batfixshift'>test64_batfixshift</data>
+      <data mode='local' path='.' name='batopt'>test64_batopt</data>
+   </rawdata>
+   <viewdata>
+      <plot title='Test MD Data'> ['temperature', 'potential'] </plot>
+   </viewdata>   
+</vqmd>

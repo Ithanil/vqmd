@@ -19,33 +19,9 @@ from process.ipi_mddata import *
 from libs.multigraph import *
 
 
-#This is what is run if the file is run as a script.
-if __name__ == '__main__':
-   import sys
-   if (len(sys.argv) != 2):
-      print("Exactly one argument expected: The input file name.")
-   else:
-      main(sys.argv[1])
-
-def main(file_name):
-   from libs.xml_io import xml_parse_file
-
-   ifile = open(file_name,"r")
-   xmlin = xml_parse_file(ifile) # Parses the file.
-   ifile.close()
-
-   vqmd(xmlin)
-
 def vqmd(xmlin):
 
    print(xmlin.fields[0][1].fields[0][1].fields)
-   
-   print(" --- begin input file content --- ")
-   ifile = open(file_name,"r")
-   for line in ifile.readlines():
-      print(line,)
-   ifile.close()
-   print(" ---  end input file content  --- ")
    
    datafields = xmlin.fields[0][1].fields[0][1].fields
    
@@ -66,11 +42,34 @@ def vqmd(xmlin):
       tempdata.append(mddata.temp)
       potdata.append(mddata.epot)
       
-   fig = figure('Sorella 64H Mol rs=1.33 T=1200K')
+   fig = figure('64H Mol rs=1.33 T=1200K')
    ax1 = fig.add_subplot(211)
    ax2 = fig.add_subplot(212)
    
-   multiGraphXY(ax1, tempdata, names = naml, ylabel='Temperature [K]', title='Sorella 64H Mol rs=1.33 T=1200K') 
+   multiGraphXY(ax1, tempdata, names = naml, ylabel='Temperature [K]', title='64H Mol rs=1.33 T=1200K') 
    multiGraphXY(ax2, potdata, xlabel='Time [fs]', ylabel='Potential Energy [H]')
 
    show()
+
+
+def runfile(filename):
+   from libs.xml_io import xml_parse_file
+
+   with open(filename,"r") as ifile:
+      print(" --- begin input file content --- ")
+      for line in ifile.readlines():
+         print(line,)
+      print(" ---  end input file content  --- ")
+      ifile.seek(0)
+      xmlin = xml_parse_file(ifile) # Parses the file.
+
+   vqmd(xmlin)
+
+
+#This is what is run if the file is run as a script.
+if __name__ == '__main__':
+   import sys
+   if (len(sys.argv) != 2):
+      print("Exactly one argument expected: The input file name.")
+   else:
+      runfile(sys.argv[1])
