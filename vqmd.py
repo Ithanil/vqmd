@@ -15,42 +15,11 @@ Functions:
 """
 
 from pylab import *
-from process.ipi_mddata import *
-from libs.multigraph import *
-
+from core.core import *
 
 def vqmd(xmlin):
 
-   print(xmlin.fields[0][1].fields[0][1].fields)
-   
-   datafields = xmlin.fields[0][1].fields[0][1].fields
-   
-   mymddata = []
-   naml = []
-   
-   for dataset in datafields:
-      if dataset[0]=='data':
-         print(dataset[1].attribs['path'])
-         print(dataset[1].attribs['name'])
-         naml.append(dataset[1].attribs['name'])
-         mymddata.append(ipi_mddata(dataset[1].attribs['path'], dataset[1].fields[0][1]))
-   
-   tempdata = []
-   potdata = []
-   
-   for mddata in mymddata:
-      tempdata.append(mddata.temp)
-      potdata.append(mddata.epot)
-      
-   fig = figure('64H Mol rs=1.33 T=1200K')
-   ax1 = fig.add_subplot(211)
-   ax2 = fig.add_subplot(212)
-   
-   multiGraphXY(ax1, tempdata, names = naml, ylabel='Temperature [K]', title='64H Mol rs=1.33 T=1200K') 
-   multiGraphXY(ax2, potdata, xlabel='Time [fs]', ylabel='Potential Energy [H]')
-
-   show()
-
+   mycore = core(xmlin)
 
 def runfile(filename):
    from libs.xml_io import xml_parse_file

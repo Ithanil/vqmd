@@ -1,4 +1,4 @@
-from process.mddata import *
+from mddata.mddata import *
 
 def flit_idict(llist, idict, iname):
     # If iname is a key in dictionary idict, return float(llist[int(idict[iname])-1]), else 0.
