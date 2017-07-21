@@ -14,12 +14,13 @@ class mplplot(object):
             potdata.append(mddata.data.epot)
             
             naml.append(mddata.name)
-
-        fig = figure('64H Mol rs=1.33 T=1200K')
+        
+        ptitle = xmlin[1].attribs['title']
+        fig = figure()
         ax1 = fig.add_subplot(211)
         ax2 = fig.add_subplot(212)
  
-        multiGraphXY(ax1, tempdata, names = naml, ylabel='Temperature [K]', title='64H Mol rs=1.33 T=1200K') 
+        multiGraphXY(ax1, tempdata, names = naml, ylabel='Temperature [K]', title=ptitle, yscale='log') 
         multiGraphXY(ax2, potdata, xlabel='Time [fs]', ylabel='Potential Energy [H]')  
 
 class mplplots(object):
