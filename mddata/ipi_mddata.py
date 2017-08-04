@@ -79,7 +79,7 @@ class ipi_mddata(mddata):
 
         for vname,vlist in lnamedict.items():
             if vname in obsdict and vname in kwnamedict:
-                seriesdict[kwnamedict[vname]] = pd.Series(vlist, index=timelist)
+                seriesdict[kwnamedict[vname]] = pd.Series(vlist, index=timelist, name=kwnamedict[vname])
 
         super(ipi_mddata, self).__init__(path, seriesdict, ndim=3, dtbase=dt)
 

@@ -1,5 +1,5 @@
 from pylab import *
-from libs.multigraph import *
+import pandas as pd
 
 class mplplot(object):
 
