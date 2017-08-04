@@ -1,11 +1,18 @@
 from mddata.mddata import *
 
-def flit_idict(llist, idict, iname):
-    # If iname is a key in dictionary idict, return float(llist[int(idict[iname])-1]), else 0.
+def append_idict(vlist, llist, idict, iname):
+    # Appends to list vlist a float value from line split list llist,
+    # found at the index specified by the value to key iname in idict.
     if iname in idict:
-        return float(llist[int(idict[iname])-1])
-    else:
+        vlist.append(float(llist[int(idict[iname])-1]))
         return 0
+    else:
+        return 1
+
+def append_idict_lists(listdict, llist, idict):
+    # Calls append_idict for key(names)/value(lists) pairs from listdict
+    for iname in listdict:
+        append_idict(listdict[iname], llist, idict, iname)
 
 class ipi_mddata(mddata):
 
@@ -21,49 +28,60 @@ class ipi_mddata(mddata):
         presscvlist = []
         radgyrlist = []
         espringlist = []
-        
-        path = dirpath+'/'+fprefix
+
+        lnamedict = {
+            'time'         : timelist,
+            'conserved'    : consqlist,
+            'temperature'  : templist,
+            'potential'    : epotlist,
+            'kinetic_md'   : ekinmdlist,
+            'kinetic_cv'   : ekincvlist,
+            'pressure_md'  : pressmdlist,
+            'pressurve_cv' : presscvlist,
+            'r_gyration'   : radgyrlist,
+            'spring'       : espringlist
+        }
+
         obsdict = {}
-        
+
+        path = dirpath+'/'+fprefix
+
         for line in open(path+'.md'):
             spaceline = line.replace('{',' ')
             linelist = spaceline.split()
             if linelist[0] == '#':
-                
+
                 obsdict[linelist[4]] = linelist[2]
-            
+
             else:
-                
-                timelist.append(flit_idict(linelist, obsdict, 'time'))
-                consqlist.append(flit_idict(linelist, obsdict, 'conserved'))
-                templist.append(flit_idict(linelist, obsdict, 'temperature'))
-                epotlist.append(flit_idict(linelist, obsdict, 'potential'))
-                ekinmdlist.append(flit_idict(linelist, obsdict, 'kinetic_md'))
-                ekincvlist.append(flit_idict(linelist, obsdict, 'kinetic_cv'))
-                pressmdlist.append(flit_idict(linelist, obsdict, 'pressure_md'))
-                presscvlist.append(flit_idict(linelist, obsdict, 'pressure_cv'))
-                radgyrlist.append(flit_idict(linelist, obsdict, 'r_gyration'))
-                espringlist.append(flit_idict(linelist, obsdict, 'spring'))
-            
+
+                append_idict_lists(lnamedict, linelist, obsdict)
+
+        dt = 0
         if len(timelist)>1:
             dt = timelist[1] - timelist[0]
-            if dt>0:
-                for it, t in enumerate(timelist):
-                    timelist[it] = it*dt
-                    
-        consqlist = list(zip(timelist, consqlist))
-        templist = list(zip(timelist, templist))
-        epotlist = list(zip(timelist, epotlist))
-        ekinmdlist = list(zip(timelist, ekinmdlist))
-        ekincvlist = list(zip(timelist, ekincvlist))
-        pressmdlist = list(zip(timelist, pressmdlist))
-        presscvlist = list(zip(timelist, presscvlist))
-        radgyrlist = list(zip(timelist, radgyrlist))
-        espringlist = list(zip(timelist, espringlist))
-        
-        super(ipi_mddata, self).__init__(path, 3, 16, 1, consq=consqlist, temp=templist, epot=epotlist, \
-                                         ekinmd=ekinmdlist, ekincv=ekincvlist, pressmd=pressmdlist, \
-                                         presscv=presscvlist, radgyr=radgyrlist, espring=espringlist)
+        if dt<=0:
+            dt = 0
+
+        kwnamedict = {
+            'conserved' : 'consq',
+            'temperature' : 'temp',
+            'potential' : 'epot',
+            'kinetic_mc' : 'ekinmd',
+            'kinetic_cv' : 'ekincv',
+            'pressure_md' : 'pressmd',
+            'pressure_cv' : 'presscv',
+            'r_gyration' : 'radgyr',
+            'spring' : 'espring'
+        }
+
+        seriesdict = {}
+
+        for vname,vlist in lnamedict.items():
+            if vname in obsdict and vname in kwnamedict:
+                seriesdict[kwnamedict[vname]] = pd.Series(vlist, index=timelist)
+
+        super(ipi_mddata, self).__init__(path, seriesdict, ndim=3, dtbase=dt)
 
 
 #testmd = ipi_mddata('.','test')
