@@ -1,9 +1,9 @@
 <myqmd verbosity='high'>
    <rawdata>
-      <data mode='local' path='test' name='NFL' type='ipi'> NFL </data>
-      <data mode='local' path='test' name='DO' type='ipi'> DO </data>
-      <data mode='local' path='test' name='LGV' type='ipi'> LGV </data>
-      <data mode='local' path='test' name='NONE' type='ipi'> NONE </data>
+      <data mode='local' path='.' name='NFL' type='ipi'> NFL </data>
+      <data mode='local' path='.' name='DO' type='ipi'> DO </data>
+      <data mode='local' path='.' name='LGV' type='ipi'> LGV </data>
+      <data mode='local' path='.' name='NONE' type='ipi'> NONE </data>
    </rawdata>
    <calcdata>
    </calcdata>

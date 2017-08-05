@@ -1,0 +1,30 @@
+#!/usr/bin/python
+
+"""
+Main script which starts the data analysis and visualization tasks according to the given input XML file. 
+
+Simply run it on a terminal via:
+    $ vqmd input.xml
+or
+    $ python vqmd input.xml
+
+where 'input.xml' should be replaced by the name of the xml input file which specifies the to-be-executed tasks. 
+For an explanation of the XML input file format, see the documentation.
+"""
+
+import os
+import sys
+
+# Check if vqmd is in path and add if not
+dir_root = os.path.realpath(
+               os.path.join(os.path.dirname(os.path.realpath(__file__)), '..'))
+if not dir_root in sys.path:
+    sys.path.insert(0, dir_root)
+
+from vqmd.vqmd import vqmd_file
+
+if __name__ == '__main__':
+   if (len(sys.argv) != 2):
+      print("Exactly one argument expected: The input file name.")
+   else:
+      vqmd_file(sys.argv[1])

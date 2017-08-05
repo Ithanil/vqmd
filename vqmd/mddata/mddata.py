@@ -1,4 +1,3 @@
-from pylab import *
 import pandas as pd
 import bisect
 

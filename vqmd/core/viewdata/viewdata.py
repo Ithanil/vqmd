@@ -1,5 +1,5 @@
 from pylab import *
-from core.viewdata.mplplots import *
+from vqmd.core.viewdata.mplplots import *
 
 class viewdata(object):
 

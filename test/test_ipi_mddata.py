@@ -1,10 +1,19 @@
-from pylab import *
-from vqmd import *
+import os
+import sys
 
-testdata1 = ipi_mddata('test', 'NFL')
-testdata2 = ipi_mddata('test', 'DO')
-testdata3 = ipi_mddata('test', 'LGV')
-testdata4 = ipi_mddata('test', 'NONE')
+# Check if vqmd is in path and add if not
+dir_root = os.path.realpath(
+               os.path.join(os.path.dirname(os.path.realpath(__file__)), '..'))
+if not dir_root in sys.path:
+    sys.path.insert(0, dir_root)
+
+from pylab import *
+from vqmd.mddata.ipi_mddata import *
+
+testdata1 = ipi_mddata('.', 'NFL')
+testdata2 = ipi_mddata('.', 'DO')
+testdata3 = ipi_mddata('.', 'LGV')
+testdata4 = ipi_mddata('.', 'NONE')
 
 fig = figure()
 ax1 = fig.add_subplot(211)

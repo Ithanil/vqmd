@@ -1,6 +1,6 @@
 from pylab import *
-from core.rawdata.rawdata import *
-from core.viewdata.viewdata import *
+from vqmd.core.rawdata.rawdata import *
+from vqmd.core.viewdata.viewdata import *
 
 class core(object):
 

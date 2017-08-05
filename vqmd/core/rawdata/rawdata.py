@@ -1,5 +1,5 @@
 from pylab import *
-from mddata.ipi_mddata import *
+from vqmd.mddata.ipi_mddata import *
 
 class data(object):
 

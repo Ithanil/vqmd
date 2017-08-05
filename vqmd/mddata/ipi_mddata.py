@@ -1,4 +1,4 @@
-from mddata.mddata import *
+from vqmd.mddata.mddata import *
 
 def append_idict(vlist, llist, idict, iname):
     # Appends to list vlist a float value from line split list llist,
@@ -82,6 +82,3 @@ class ipi_mddata(mddata):
                 seriesdict[kwnamedict[vname]] = pd.Series(vlist, index=timelist, name=kwnamedict[vname])
 
         super(ipi_mddata, self).__init__(path, seriesdict, ndim=3, dtbase=dt)
-
-
-#testmd = ipi_mddata('.','test')
