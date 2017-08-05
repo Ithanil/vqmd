@@ -40,6 +40,9 @@ class mplplot(object):
                 newax = self.fig.add_subplot(nax, 1, itax)
                 pltdata.plot(ax=newax, legend=dolegend)
 
+                try: newax.set_title(xmlfield[1].attribs['title'])
+                except KeyError: pass
+
                 try: newax.set_xlabel(xmlfield[1].attribs['xlabel'])
                 except KeyError: pass
 

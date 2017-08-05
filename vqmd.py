@@ -2,12 +2,12 @@
 
 """
 Main script which starts the data analysis and visualization tasks according to the given input XML file. 
-Instead vwmd can also be imported as a python module and used as library, or instead as tool by passing a XML node object as input.
+Instead vqmd can also be imported as a python module and used as library, or instead as tool by passing a XML node object as input.
 
 As a script run it on a terminal by:
     $ vqmd input.xml
 where 'input.xml' should be replaced by the name of the xml input file which specifies the to-be-executed tasks. 
-For an explanation of the XML input file format, see the reference documentation.
+For an explanation of the XML input file format, see the documentation.
 
 Functions:
    main: Runs the tool standalone, by XML input file.

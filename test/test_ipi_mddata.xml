@@ -1,0 +1,18 @@
+<myqmd verbosity='high'>
+   <rawdata>
+      <data mode='local' path='test' name='NFL' type='ipi'> NFL </data>
+      <data mode='local' path='test' name='DO' type='ipi'> DO </data>
+      <data mode='local' path='test' name='LGV' type='ipi'> LGV </data>
+      <data mode='local' path='test' name='NONE' type='ipi'> NONE </data>
+   </rawdata>
+   <calcdata>
+   </calcdata>
+   <viewdata>
+   <figs>
+      <fig>
+         <plot title='Noisy Langevin Thermostat Test (HarmOsc Toy System)' ylabel='Temperature [K]' yscale='log' legend='True'> ['temp'] </plot>
+         <plot xlabel='Time [fs]' ylabel='Potential Energy [H]'> ['epot'] </plot>
+      </fig>
+   </figs>
+   </viewdata> 
+</myqmd>

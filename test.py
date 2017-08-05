@@ -1,13 +1,10 @@
-from pylab import *
+#!/usr/bin/python
 
-import os
-import sys
-sys.path.insert(0, os.getcwd())
+from vqmd import vqmd
+from libs.xml_io import xml_parse_file
 
-import test.test1
-import test.test2
-import test.test3
-import test.test4
-import test.test5
+import test.test_ipi_mddata
 
-show()
+with open('test/test_ipi_mddata.xml','r') as xmlfile:
+    xmlin = xml_parse_file(xmlfile)
+    vqmd(xmlin)
