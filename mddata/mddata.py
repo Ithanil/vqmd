@@ -29,8 +29,6 @@ class mddata(object):
     def checkset_tprop(self, name, kwdict):
 
         if name in kwdict:
-            print(name)
-            print(kwdict[name])
             if isinstance(kwdict[name], pd.Series):
                 setattr(self, name, kwdict[name])
                 self.tprops.append(name)

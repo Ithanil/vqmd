@@ -8,4 +8,3 @@ class core(object):
         self.rawdata = rawdata(xmlin.fields[0][1].fields[0][1])
         self.calcdata = []
         self.viewdata = viewdata(xmlin.fields[0][1].fields[2][1], self.rawdata, self.calcdata)
-        

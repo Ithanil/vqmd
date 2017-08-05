@@ -10,16 +10,16 @@ class data(object):
             self.path = xmlin[1].attribs['path']
             self.name = xmlin[1].attribs['name']
             self.type = xmlin[1].attribs['type']
-            
+
             if self.type == 'ipi':
 
-                self.data = ipi_mddata(self.path, xmlin[1].fields[0][1])
+                self.data = ipi_mddata(self.path, str(xmlin[1].fields[0][1]).strip())
 
 class rawdata(object):
 
     def __init__(self, xmlin, **kwargs):
 
-        self.data = []   
+        self.data = []
 
         for xmlfield in xmlin.fields:
             if xmlfield[0] == 'data':
