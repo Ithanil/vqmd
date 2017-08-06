@@ -3,33 +3,126 @@ import bisect
 
 class mddata(object):
 
-    def __init__(self, label, kwdict, **kwargs):
+    cssprops = ['label', 'npart', 'nbead', 'ndim',
+                'dtbase', 'volume', 'density', 'wsrad']
+    csvprops = []
+    csmprops = ['cellmat']
 
-        proplist = ['ndim', 'npart', 'nbead', 'pnames', 'masses', 'dtbase', 'cellabc']
-        tproplist = ['pos', 'vel', 'frc', 'consq', 'temp', 'epot', 'ekinmd', 'ekincv',
-                     'pressmd', 'presscv', 'radgyr', 'espring', 'tcellabc', 'tnpart']
-        self.props = []
-        self.tprops = []
+    ccsprops = ['names', 'masses', 'charges']
+    ccvprops = ['dipmom', 'spin']
 
-        self.label = label
+    cbsprops = []
+    cbvprops = []
+
+    tssprops = ['consq', 'temp', 'epot', 'ekinmd', 'ekincv', 'pressmd', 'presscv', 'radgyr', 'espring',
+                'tvolume', 'tdensity', 'twsrad']
+    tsvprops = []
+    tsmprops = ['tcellmat']
+
+    tcsprops = []
+    tcvprops = ['cpos', 'cvel', 'cfrc', 'tdipmom', 'tspin']
+
+    tbsprops = []
+    tbvprops = ['bpos', 'bvel', 'bfrc']
+
+    def __init__(self, label, npart, nbead, ndim, kwdict = {}, **kwargs):
+
+        kwargs.update({'label' : label, 'npart' : npart, 'nbead' : nbead, 'ndim' : ndim})
         kwargs.update(kwdict)
 
-        for prop in proplist:
-            self.checkset_prop(prop, kwargs)
-        for tprop in tproplist:
-            self.checkset_tprop(tprop, kwargs)
+        self.cssprops = []
+        self.csvprops = []
+        self.csmprops = []
+        self.ccsprops = []
+        self.ccvprops = []
+        self.cbsprops = []
+        self.cbvprops = []
+        self.tssprops = []
+        self.tsvprops = []
+        self.tsmprops = []
+        self.tcsprops = []
+        self.tcvprops = []
+        self.tbsprops = []
+        self.tbvprops = []
+        self.props = []
 
-    def checkset_prop(self, name, kwdict):
+        self.set_props(kwdict)
 
-        if name in kwdict:
-            setattr(self, name, kwdict[name])
-            self.props.append(name)
+    def set_props(self, kwdict):
 
-    def checkset_tprop(self, name, kwdict):
+        for name in kwdict:
+            if name in mddata.cssprops:
+                newprop = kwdict[name]
+                self.cssprops.append(name)
 
-        if name in kwdict:
-            if isinstance(kwdict[name], pd.Series):
-                setattr(self, name, kwdict[name])
-                self.tprops.append(name)
+            elif name in mddata.csvprops:
+                newprop = kwdict[name]
+                self.csvprops.append(name)
+
+            elif name in mddata.csmprops:
+                newprop = kwdict[name]
+                self.csmprops.append(name)
+
+            elif name in mddata.ccsprops:
+                newprop = kwdict[name]
+                self.ccsprops.append(name)
+
+            elif name in mddata.ccvprops:
+                newprop = kwdict[name]
+                self.ccvprops.append(name)
+
+            elif name in mddata.cbsprops:
+                newprop = kwdict[name]
+                self.cbsprops.append(name)
+
+            elif name in mddata.cbvprops:
+                newprop = kwdict[name]
+                self.cbvprops.append(name)
+
+            elif name in mddata.tssprops:
+                newprop = kwdict[name]
+                self.tssprops.append(name)
+
+            elif name in mddata.tsvprops:
+                newprop = kwdict[name]
+                self.tsvprops.append(name)
+
+            elif name in mddata.tsmprops:
+                newprop = kwdict[name]
+                self.tsmprops.append(name)
+
+            elif name in mddata.tcsprops:
+                newprop = kwdict[name]
+                self.tcsprops.append(name)
+
+            elif name in mddata.tcvprops:
+                newprop = kwdict[name]
+                self.tcvprops.append(name)
+
+            elif name in mddata.tbsprops:
+                newprop = kwdict[name]
+                self.tbsprops.append(name)
+
+            elif name in mddata.tbvprops:
+                newprop = kwdict[name]
+                self.tbvprops.append(name)
+
             else:
-                print('[mddata] Error: mddata constructor received time dependent property which is not an instance of Pandas Series.')
+                raise AttributeError('mddata set_props: Tried to set property that is not in property lists.')
+
+            self.props.append(name)
+            self.__dict__[name] = newprop
+
+
+            def __setattr__(self, name, value):
+                if hasattr(self, name):
+                    raise TypeError('mddata setattr: Tried to set mddata attribute, but they are immutable.')
+                else:
+                    self.set_props({name : value})
+
+            def check_plists(self):
+                return self.props == \
+                    self.cssprops + self.csvprops + self.csmprops \
+                    + self.ccsprops + self.ccvprops + self.cbsprops + self.cbvprops \
+                    + self.tssprops + self.tsvprops + self.tsmprops \
+                    + self.tcsprops + self.tcvprops + self.tbsprops + self.tbvprops
