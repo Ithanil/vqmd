@@ -1,4 +1,4 @@
-from vqmd.mddata.mddata import *
+from vqmd.mddata.mddata import mddata
 
 def append_idict(vlist, llist, idict, iname):
     # Appends to list vlist a float value from line split list llist,

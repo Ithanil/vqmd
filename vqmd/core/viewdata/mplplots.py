@@ -1,11 +1,11 @@
-from pylab import *
+import matplotlib.pyplot as plt
 import pandas as pd
 
 class mplplot(object):
 
     def __init__(self, xmlin, rawdata, calcdata, **kwargs):
 
-        self.fig = figure()
+        self.fig = plt.figure()
         self.axs = []
 
         try: self.fig.suptitle(xmlin.attribs['title'])
@@ -25,7 +25,7 @@ class mplplot(object):
                 pltobs = eval(xmlfield[1].fields[0][1])
                 if isinstance(pltobs, str): pltobs = [pltobs]
 
-                for mddata in rawdata.data:
+                for mddata in rawdata.datas:
                     for obs in pltobs:
                         datname = mddata.name
                         if len(pltobs)>1:
@@ -67,4 +67,4 @@ class mplplots(object):
             if xmlfield[0] == 'fig':
                 self.plots.append(mplplot(xmlfield[1], rawdata, calcdata))
 
-        show()
+        plt.show()

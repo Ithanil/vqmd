@@ -44,7 +44,7 @@ __all__ = ['xml_node', 'xml_handler', 'xml_parse_string', 'xml_parse_file',
            'read_array', 'read_tuple', 'read_dict', 'write_type', 'write_list',
            'write_tuple', 'write_float', 'write_bool', 'write_dict']
 
-from pylab import *
+from numpy import *
 
 from xml.sax import parseString, parse
 from xml.sax.handler import ContentHandler 

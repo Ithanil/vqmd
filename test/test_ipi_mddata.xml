@@ -10,8 +10,8 @@
    <viewdata>
    <figs>
       <fig>
-         <plot title='Noisy Langevin Thermostat Test (HarmOsc Toy System)' ylabel='Temperature [K]' yscale='log' legend='True'> ['temp'] </plot>
-         <plot xlabel='Time [fs]' ylabel='Potential Energy [H]'> ['epot'] </plot>
+         <plot title='Noisy Force Langevin Test (HarmOsc Toy System)' ylabel='Temperature [K]' yscale='log'> ['temp'] </plot>
+         <plot xlabel='Time [fs]' ylabel='Potential Energy [H]' legend='True'> ['epot'] </plot>
       </fig>
    </figs>
    </viewdata> 

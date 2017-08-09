@@ -1,5 +1,4 @@
-from pylab import *
-from vqmd.mddata.ipi_mddata import *
+from vqmd.mddata.ipi_mddata import ipi_mddata
 
 class data(object):
 
@@ -19,8 +18,8 @@ class rawdata(object):
 
     def __init__(self, xmlin, **kwargs):
 
-        self.data = []
+        self.datas = []
 
         for xmlfield in xmlin.fields:
             if xmlfield[0] == 'data':
-                self.data.append(data(xmlfield))
+                self.datas.append(data(xmlfield))
