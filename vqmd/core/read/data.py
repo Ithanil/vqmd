@@ -1,3 +1,4 @@
+from vqmd.mddata.mddata import mddata
 from vqmd.mddata.ipi_mddata import ipi_mddata
 from vqmd.core.warnings import *
 
@@ -5,27 +6,29 @@ class data(object):
 
     def __init__(self, xmlin, core, **kwargs):
 
-        if xmlin[0]=='data':
-            try: self.mode = xmlin[1].attribs['mode']
-            except KeyError: self.mode = 'local'
+        self.data = mddata('N/A', 0, 0, 0) # Defaults to empty mddata
 
-            try: self.path = xmlin[1].attribs['path']
-            except KeyError: self.path = '.'
+        dodata = True # Only if dodata stays true we read data
 
-            try: self.name = xmlin[1].attribs['name']
-            except KeyError: self.name = ''
+        try: self.mode = xmlin.attribs['mode']
+        except KeyError: self.mode = 'local'
 
-            try: self.type = xmlin[1].attribs['type']
-            except KeyError: self.type = 'ipi'
+        try: self.path = xmlin.attribs['path']
+        except KeyError: self.path = '.'
 
-            if not self.mode == 'local':
-                warn_data_mode(self.mode)
+        try: self.name = xmlin.attribs['name']
+        except KeyError: self.name = ''
 
+        try: self.type = xmlin.attribs['type']
+        except KeyError: self.type = 'ipi'
+
+        if not self.mode == 'local':
+            warn_data_mode(self.mode)
+            dodata = False
+
+        if dodata:
             if self.type == 'ipi':
-                self.data = ipi_mddata(self.path, str(xmlin[1].fields[0][1]).strip())
+                self.data = ipi_mddata(self.path, str(xmlin.fields[0][1]).strip())
 
             else:
                 warn_data_type(self.type)
-
-        else:
-            warn_wrong_xml(xmlin[0])

@@ -1,4 +1,5 @@
 from vqmd.mddata.mddata import mddata
+import warnings
 
 def append_idict(vlist, llist, idict, iname):
     # Appends to list vlist a float value from line split list llist,
@@ -37,7 +38,7 @@ class ipi_mddata(mddata):
             'kinetic_md'   : ekinmdlist,
             'kinetic_cv'   : ekincvlist,
             'pressure_md'  : pressmdlist,
-            'pressurve_cv' : presscvlist,
+            'pressure_cv' : presscvlist,
             'r_gyration'   : radgyrlist,
             'spring'       : espringlist
         }
@@ -46,16 +47,19 @@ class ipi_mddata(mddata):
 
         path = dirpath+'/'+fprefix
 
-        for line in open(path+'.md'):
-            spaceline = line.replace('{',' ')
-            linelist = spaceline.split()
-            if linelist[0] == '#':
+        try:
+            with open(path + '.md') as mdfile:
+                for line in mdfile:
+                    spaceline = line.replace('{',' ')
+                    linelist = spaceline.split()
 
-                obsdict[linelist[4]] = linelist[2]
+                    if linelist[0] == '#':
+                        obsdict[linelist[4]] = linelist[2]
 
-            else:
-
-                append_idict_lists(lnamedict, linelist, obsdict)
+                    else:
+                        append_idict_lists(lnamedict, linelist, obsdict)
+        except(FileNotFoundError):
+            warnings.warn('No such file or directory: \'' + path + '.md\'. Did nothing.')
 
         dt = 0
         if len(timelist)>1:

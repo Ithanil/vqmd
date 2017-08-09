@@ -9,7 +9,7 @@ class read(object):
 
         for xmlfield in xmlin.fields:
             if xmlfield[0] == 'data':
-                self.datas.append(data(xmlfield, core))
+                self.datas.append(data(xmlfield[1], core))
 
             else:
                 warn_wrong_xml(xmlfield[0])

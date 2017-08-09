@@ -19,7 +19,10 @@ class plot(object):
                         datname += " " + obs
                     pltdict[datname]=getattr(mddata.data, obs)
                 else:
-                    print('Viewing of non-tssprops still to be implemented.')
+                    if obs in mddata.data.props:
+                        print('Plotting non-tssprops not yet implemented.')
+                    else:
+                        print('\'' + obs + '\' is not a property of the provided mddata object with name \'' + mddata.name + '\'. Did nothing.')
 
         pltdata = pd.DataFrame(pltdict)
 

@@ -1,0 +1,20 @@
+<vqmd>
+  <read>
+    <data mode='local' path='.' name='NFL' type='ipi'> NFL </data>
+    <data mode='local' path='.' name='DO' type='rpmz'> DO </data>
+    <data mode='ssh' path='.' name='LGV' type='ipi'> LGV </data>
+    <data mode='local' path='.' name='NONE' type='ipi'> NONE </data>
+    <data mode='local' path='.' name='N/A' type='ipi'> N/A </data>
+  </read>
+  <calc>
+  </calc>
+  <view>
+    <fig>
+      <plot title='Noisy Force Langevin Test (HarmOsc Toy System)' ylabel='Temperature [K]' yscale='log' legend='true'> 'temp' </plot>
+      <plot xlabel='Time [fs]' ylabel='Energy [H]' legend='True'> ['epot','consq'] </plot>
+    </fig>
+    <fig>
+      <plot title='Noisy Force Langevin Test (HarmOsc Toy System)' xlabel='Time [fs]' ylabel='Potential Energy [H]' legend='True'> 'presscv' </plot>
+    </fig>
+  </view> 
+</vqmd>
