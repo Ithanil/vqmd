@@ -1,18 +1,16 @@
-<myqmd verbosity='high'>
-   <rawdata>
-      <data mode='local' path='.' name='NFL' type='ipi'> NFL </data>
-      <data mode='local' path='.' name='DO' type='ipi'> DO </data>
-      <data mode='local' path='.' name='LGV' type='ipi'> LGV </data>
-      <data mode='local' path='.' name='NONE' type='ipi'> NONE </data>
-   </rawdata>
-   <calcdata>
-   </calcdata>
-   <viewdata>
-   <figs>
-      <fig>
-         <plot title='Noisy Force Langevin Test (HarmOsc Toy System)' ylabel='Temperature [K]' yscale='log'> ['temp'] </plot>
-         <plot xlabel='Time [fs]' ylabel='Potential Energy [H]' legend='True'> ['epot'] </plot>
-      </fig>
-   </figs>
-   </viewdata> 
-</myqmd>
+<vqmd>
+  <read>
+    <data mode='local' path='.' name='NFL' type='ipi'> NFL </data>
+    <data mode='local' path='.' name='DO' type='ipi'> DO </data>
+    <data mode='local' path='.' name='LGV' type='ipi'> LGV </data>
+    <data mode='local' path='.' name='NONE' type='ipi'> NONE </data>
+  </read>
+  <calc>
+  </calc>
+  <view>
+    <fig>
+      <plot title='Noisy Force Langevin Test (HarmOsc Toy System)' ylabel='Temperature [K]' yscale='log'> ['temp'] </plot>
+      <plot xlabel='Time [fs]' ylabel='Potential Energy [H]' legend='True'> ['epot'] </plot>
+    </fig>
+  </view> 
+</vqmd>
