@@ -2,6 +2,8 @@ from vqmd.mddata.mddata import mddata
 from vqmd.mddata.ipi_mddata import ipi_mddata
 from vqmd.core.warnings import *
 
+import subprocess
+
 class data(object):
 
     def __init__(self, xmlin, core, **kwargs):
@@ -22,7 +24,12 @@ class data(object):
         try: self.type = xmlin.attribs['type']
         except KeyError: self.type = 'ipi'
 
-        if not self.mode == 'local':
+        if self.mode == 'local':
+            pass
+        elif self.mode == 'ssh':
+            sshpath = xmlin.attribs['sshpath'] 
+            subprocess.run(["scp", "-r", sshpath, self.path])
+        else:
             warn_data_mode(self.mode)
             dodata = False
 
