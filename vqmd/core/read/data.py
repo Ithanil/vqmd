@@ -26,9 +26,12 @@ class data(object):
 
         if self.mode == 'local':
             pass
-        elif self.mode == 'ssh':
-            sshpath = xmlin.attribs['sshpath'] 
-            subprocess.run(["scp", "-r", sshpath, self.path])
+        elif self.mode == 'scp':
+            remote = xmlin.attribs['remote'] 
+            subprocess.run(["scp", "-r", remote + '/.', self.path])
+        elif self.mode == 'rsync':
+            remote = xmlin.attribs['remote'] 
+            subprocess.run(["rsync", "-rv", remote + '/', self.path])
         else:
             warn_data_mode(self.mode)
             dodata = False
