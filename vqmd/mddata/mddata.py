@@ -2,29 +2,37 @@ import numpy as np
 import pandas as pd
 import bisect
 
+from vqmd.mddata.warnings import *
+
 class mddata(object):
 
+    # constant system scalar/vector/matrix properties
     csspnames = ['label', 'npart', 'nbead', 'ndim',
-                'dtbase', 'volume', 'density', 'wsrad']
+                'volume', 'density', 'wseitzr']
     csvpnames = []
     csmpnames = ['cellmat']
 
-    ccspnames = ['names', 'masses', 'charges']
-    ccvpnames = ['dipmom', 'spin']
+    # constant centroid scalar/vector properties
+    ccspnames = ['names', 'cmasses']
+    ccvpnames = []
 
-    cbspnames = []
+    # constant bead scalar/vector properties
+    cbspnames = ['bmasses']
     cbvpnames = []
 
-    tsspnames = ['consq', 'temp', 'epot', 'ekinmd', 'ekincv', 'pressmd', 'presscv', 'radgyr', 'espring',
-                'tvolume', 'tdensity', 'twsrad']
+    # time-dependent system scalar/vector/matrix properties
+    tsspnames = ['temp', 'epot', 'ekin', 'etot', 'press', 'virial', 'radgyr',
+                'tvolume', 'tdensity', 'twseitzr']
     tsvpnames = []
     tsmpnames = ['tcellmat']
 
+    # time-dependent centroid scalar/vector properties
     tcspnames = []
-    tcvpnames = ['cpos', 'cvel', 'cfrc', 'tdipmom', 'tspin']
+    tcvpnames = ['cpos', 'cvel', 'cfrc', 'cmom']
 
+    # time-dependent bead scalar/vector properties
     tbspnames = []
-    tbvpnames = ['bpos', 'bvel', 'bfrc']
+    tbvpnames = ['bpos', 'bvel', 'bfrc', 'bmom']
 
     def __init__(self, label, npart, nbead, ndim, kwdict = {}, **kwargs):
 
@@ -63,130 +71,117 @@ class mddata(object):
             # The following if tree checks if the input lists have reasonable shape.
             # Probably not very pythonic
 
-            if name in mddata.csspnames:
+            if name in self.__class__.csspnames:
                 if np.shape(newprop) == ():
                     self.cssprops.append(name)
                 elif np.shape(newprop) == (1,):
                     self.cssprops.append(name)
                     newprop = newprop[0]
                 else:
-                    print('Warning: Constant system scalar property \''+ name \
-                          +'\' is not a scalar or a list with shape (1,). Property will not be added.')
+                    warn_prop_isnot('Constant system scalar', name, 'a scalar or list with shape (1,)')
                     continue
 
-            elif name in mddata.csvpnames:
+            elif name in self.__class__.csvpnames:
                 if np.shape(newprop) == (self.ndim,):
                     self.csvprops.append(name)
                 else:
-                    print('Warning: Constant system vector property \''+ name \
-                          +'\' is not a list with shape (ndim,). Property will not be added.')
+                    warn_prop_isnot('Constant system vector', name, 'a list with shape (ndim,)')
                     continue
 
-            elif name in mddata.csmpnames:
+            elif name in self.__class__.csmpnames:
                 if np.shape(newprop) == (self.ndim, self.ndim):
                     self.csmprops.append(name)
                 else:
-                    print('Warning: Constant system matrix property \''+ name \
-                          +'\' is not a list with shape (ndim, ndim). Property will not be added.')
+                    warn_prop_isnot('Constant system matrix', name, 'a list with shape (ndim, ndim)')
                     continue
 
-            elif name in mddata.ccspnames:
+            elif name in self.__class__.ccspnames:
                 if np.shape(newprop) == (self.npart,):
                     self.ccsprops.append(name)
                 else:
-                    print('Warning: Constant centroid scalar property \''+ name \
-                          +'\' is not a list with shape (npart,). Property will not be added.')
+                    warn_prop_isnot('Constant centroid scalar', name, 'a list with shape (npart,)')
                     continue
 
-            elif name in mddata.ccvpnames:
+            elif name in self.__class__.ccvpnames:
                 if np.shape(newprop) == (self.npart, self.ndim):
                     self.ccvprops.append(name)
                 else:
-                    print('Warning: Constant centroid vector property \''+ name \
-                          +'\' is not a list with shape (npart, ndim). Property will not be added.')
+                    warn_prop_isnot('Constant centroid vector', name, 'a list with shape (npart, ndim)')
                     continue
 
-            elif name in mddata.cbspnames:
+            elif name in self.__class__.cbspnames:
                 if np.shape(newprop) == (self.npart, self.nbead):
                     self.cbsprops.append(name)
                 else:
-                    print('Warning: Constant bead scalar property \''+ name \
-                          +'\' is not a list with shape (npart, nbead). Property will not be added.')
+                    warn_prop_isnot('Constant bead scalar', name, 'a list with shape (npart, nbead)')
                     continue
 
-            elif name in mddata.cbvpnames:
+            elif name in self.__class__.cbvpnames:
                 if np.shape(newprop) == (self.npart, self.nbead, self.ndim):
                     self.cbvprops.append(name)
                 else:
-                    print('Warning: Constant bead vector property \''+ name \
-                          +'\' is not a list with shape (npart, nbead, ndim). Property will not be added.')
+                    warn_prop_isnot('Constant bead vector', name, 'a list with shape (npart, nbead, ndim)')
                     continue
 
-            elif name in mddata.tsspnames:
+            elif name in self.__class__.tsspnames:
                 if np.shape(newprop) == (2, tlen):
                     self.tssprops.append(name)
                     newprop = pd.Series(newprop[1], index = newprop[0])
                 else:
-                    print('Warning: Time-dependent system scalar property \''+ name \
-                          +'\' is not a list with shape (2, *). Property will not be added.')
+                    warn_prop_isnot('Time-dependent system scalar', name, 'a list with shape (2, *)')
                     continue
 
-            elif name in mddata.tsvpnames:
+            elif name in self.__class__.tsvpnames:
                 if np.shape(newprop) == (2, tlen, self.ndim):
                     self.tsvprops.append(name)
                     newprop = pd.Series(newprop[1])
                 else:
-                    print('Warning: Time-dependent system vector property \''+ name \
-                          +'\' is not a list with shape (2, *, ndim). Property will not be added.')
+                    warn_prop_isnot('Time-dependent system vector', name, 'a list with shape (2, *, ndim)')
                     continue
 
-            elif name in mddata.tsmpnames:
+            elif name in self.__class__.tsmpnames:
                 if np.shape(newprop) == (2, tlen, self.ndim, self.ndim):
                     self.tsmprops.append(name)
                     newprop = pd.Series(newprop[1])
                 else:
-                    print('Warning: Time-dependent system matrix property \''+ name \
-                          +'\' is not a list with shape (2, *, ndim, ndim). Property will not be added.')
+                    warn_prop_isnot('Time-dependent system matrix', name, 'a list with shape (2, *, ndim, ndim)')
                     continue
 
-            elif name in mddata.tcspnames:
+            elif name in self.__class__.tcspnames:
                 if np.shape(newprop) == (2, tlen, self.npart):
                     self.tcsprops.append(name)
                     newprop = pd.Series(newprop[1])
                 else:
-                    print('Warning: Time-dependent centroid scalar property \''+ name \
-                          +'\' is not a list with shape (2, *, npart). Property will not be added.')
+                    warn_prop_isnot('Time-dependent centroid scalar', name, 'a list with shape (2, *, npart)')
                     continue
 
-            elif name in mddata.tcvpnames:
+            elif name in self.__class__.tcvpnames:
                 if np.shape(newprop) == (2, tlen, self.npart, self.ndim):
                     self.tcvprops.append(name)
                     newprop = pd.Series(newprop[1])
                 else:
-                    print('Warning: Time-dependent centroid vector property \''+ name \
-                          +'\' is not a list with shape (2, *, npart, ndim). Property will not be added.')
+                    warn_prop_isnot('Time-dependent centroid vector', name, 'a list with shape (2, *, npart, ndim)')
                     continue
 
-            elif name in mddata.tbspnames:
+            elif name in self.__class__.tbspnames:
                 if np.shape(newprop) == (2, tlen, self.npart, self.nbead):
                     self.tbsprops.append(name)
                     newprop = pd.Series(newprop[1])
                 else:
-                    print('Warning: Time-dependent bead scalar property \''+ name \
-                          +'\' is not a list with shape (2, *, npart, nbead). Property will not be added.')
+                    warn_prop_isnot('Time-dependent bead scalar', name, 'a list with shape (2, *, npart, nbead)')
                     continue
 
-            elif name in mddata.tbvpnames:
+            elif name in self.__class__.tbvpnames:
                 if np.shape(newprop) == (2, tlen, self.npart, self.nbead, self.ndim):
                     self.tbvprops.append(name)
                     newprop = pd.Series(newprop[1])
                 else:
-                    print('Warning: Time-dependent bead vector property \''+ name \
-                          +'\' is not a list with shape (2, *, npart, nbead, ndim). Property will not be added.')
+                    warn_prop_isnot('Time-dependent bead vector', name, 'a list with shape (2, *, npart, nbead, ndim)')
                     continue
 
             else:
-                raise AttributeError('mddata set_props: Tried to set property \'' + name + '\' that is not in property lists.')
+                warn_prop_unknown(name)
+                continue
 
             self.__dict__[name] = newprop
 

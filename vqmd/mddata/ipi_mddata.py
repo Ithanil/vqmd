@@ -1,5 +1,5 @@
 from vqmd.mddata.mddata import mddata
-import warnings
+from vqmd.mddata.warnings import *
 
 def append_idict(vlist, llist, idict, iname):
     # Appends to list vlist a float value from line split list llist,
@@ -16,6 +16,10 @@ def append_idict_lists(listdict, llist, idict):
         append_idict(listdict[iname], llist, idict, iname)
 
 class ipi_mddata(mddata):
+
+    tsspnames = mddata.tsspnames + ['consqty', 'ekin_md', 'press_md', 'espring']
+    tsmpnames = mddata.tsmpnames + ['ekint', 'virialt', 'virialt_md' 'kstresst', 'kstresst_md', 'stresst', 'stresst_md']
+    tcvpnames = mddata.tcvpnames + ['cradgyrv']
 
     def __init__(self, dirpath, fprefix):
 
@@ -38,7 +42,7 @@ class ipi_mddata(mddata):
             'kinetic_md'   : ekinmdlist,
             'kinetic_cv'   : ekincvlist,
             'pressure_md'  : pressmdlist,
-            'pressure_cv' : presscvlist,
+            'pressure_cv'  : presscvlist,
             'r_gyration'   : radgyrlist,
             'spring'       : espringlist
         }
@@ -59,22 +63,16 @@ class ipi_mddata(mddata):
                     else:
                         append_idict_lists(lnamedict, linelist, obsdict)
         except(FileNotFoundError):
-            warnings.warn('No such file or directory: \'' + path + '.md\'. Did nothing.')
-
-        dt = 0
-        if len(timelist)>1:
-            dt = timelist[1] - timelist[0]
-        if dt<=0:
-            dt = 0
+            warn_file_not_found(path + '.md')
 
         kwnamedict = {
-            'conserved' : 'consq',
+            'conserved' : 'consqty',
             'temperature' : 'temp',
             'potential' : 'epot',
-            'kinetic_mc' : 'ekinmd',
-            'kinetic_cv' : 'ekincv',
-            'pressure_md' : 'pressmd',
-            'pressure_cv' : 'presscv',
+            'kinetic_md' : 'ekin_md',
+            'kinetic_cv' : 'ekin',
+            'pressure_md' : 'press_md',
+            'pressure_cv' : 'press',
             'r_gyration' : 'radgyr',
             'spring' : 'espring'
         }
@@ -85,4 +83,4 @@ class ipi_mddata(mddata):
             if vname in obsdict and vname in kwnamedict:
                 seriesdict[kwnamedict[vname]] = [timelist, vlist]
 
-        super(ipi_mddata, self).__init__(path, 0, 1, 3, seriesdict, dtbase=dt)
+        super(ipi_mddata, self).__init__(path, 0, 1, 3, seriesdict)
