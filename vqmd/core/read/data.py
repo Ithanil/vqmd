@@ -24,17 +24,20 @@ class data(object):
         try: self.type = xmlin.attribs['type']
         except KeyError: self.type = 'ipi'
 
-        if self.mode == 'local':
-            pass
-        elif self.mode == 'scp':
-            remote = xmlin.attribs['remote'] 
-            subprocess.run(["scp", "-r", remote + '/.', self.path])
-        elif self.mode == 'rsync':
-            remote = xmlin.attribs['remote'] 
-            subprocess.run(["rsync", "-rv", remote + '/', self.path])
-        else:
-            warn_data_mode(self.mode)
-            dodata = False
+        if not self.mode == 'local':
+            remote = xmlin.attribs['remote']
+            try: port = xmlin.attribs['port']
+            except KeyError: port = '22'
+
+            if self.mode == 'scp':
+                subprocess.run(["scp", "-rp", port, remote + '/.', self.path])
+            elif self.mode == 'rsync':
+                try: rsynce = xmlin.attribs['rsync-e']
+                except KeyError: rsynce = "ssh -p " + port
+                subprocess.run(["rsync", "-rve", rsynce, remote + '/', self.path])
+            else:
+                warn_data_mode(self.mode)
+                dodata = False
 
         if dodata:
             if self.type == 'ipi':
