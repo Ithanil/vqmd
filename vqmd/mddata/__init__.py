@@ -198,7 +198,7 @@ class mddata(object):
             + self.ccsprops + self.ccvprops + self.cbsprops + self.cbvprops
 
         self.__dict__['tprops'] = \
-                self.tssprops + self.tsvprops + self.tsmprops \
+            self.tssprops + self.tsvprops + self.tsmprops \
             + self.tcsprops + self.tcvprops + self.tbsprops + self.tbvprops
 
         self.__dict__['props'] = self.cprops + self.tprops
@@ -213,40 +213,55 @@ class mddata(object):
         try:
             calcfun = object.__getattribute__(self, 'calcset_' + name) # try to get calcset routine
         except AttributeError: # if there is not calcset routine
-            raise AttributeError('\'mddata\' object has no attribute \'' + name + '\' and no corresponding calcset routine is present.')
+            raise AttributeError('\'mddata\' object has no attribute \'' + name \
+                                 + '\' and no corresponding calcset routine is present.')
 
         try:
             didset = calcfun()
         except AttributeError:
+            print('An unexpected error ocurred in the called \'calcset_' + name + '\' routine! Bug suspected!')
             didset = False
 
         if not didset: # if setting was not successfull
-            raise AttributeError('\'mddata\' object has no attribute \'' + name + '\' and it could not be set via the corresponding calcset routine.')
+            raise AttributeError('\'mddata\' object has no attribute \'' + name + \
+                                 '\' and it could not be set via the corresponding calcset routine.')
 
         return object.__getattribute__(self, name) # if successfull we can return
 
-    def calc_depcheck(self, name, deps):
+    def depcheck_callback(self, name, deps, calcfun):
         for dep in deps:
-            if not hasattr(self, dep):
+            if not hasattr(self, dep): # if not, getattr gets invoked implicitly and there calcset will be tried
                 warn_prop_missdep(self.__class__.__name__, name, dep)
                 return False
+
+        arglist = [getattr(self, x) for x in deps]
+        setattr(self, name, calcfun(*arglist))
         return True
 
+    @staticmethod
+    def calc_volume(cellmat):
+        return np.abs(np.dot(np.cross(cellmat[0], cellmat[1]), cellmat[2]))
+
     def calcset_volume(self):
-        if self.calc_depcheck('volume', ['cellmat']):
-            self.volume = np.abs(np.dot(np.cross(self.cellmat[0], self.cellmat[1]), self.cellmat[2]))
-            return True
-        return False
+        return self.depcheck_callback('volume', ['cellmat'], mddata.calc_volume)
+
+    @staticmethod
+    def calc_density(volume, masses):
+        return np.sum(masses) / volume
 
     def calcset_density(self):
         if hasattr(self, 'cmasses'):
-            if self.calc_depcheck('density', ['volume', 'cmasses']):
-                self.density = np.sum(self.cmasses) / self.volume
-                return True
+            return self.depcheck_callback('density', ['volume', 'cmasses'], mddata.calc_density)
         elif hasattr(self, 'bmasses'):
-            if self.calc_depcheck('density', ['volume', 'bmasses']):
-                self.density = np.sum(self.bmasses) / self.volume
-                return True
+            return self.depcheck_callback('density', ['volume', 'bmasses'], mddata.calc_density)
         else:
             warn_prop_missdep(self.__class__.__name__, 'density', 'cmasses or bmasses')
         return False
+
+    @staticmethod
+    def calc_wseitzr(npart, volume):
+        return (3.0 * volume / (4.0 * np.pi * npart)) ** (1.0/3.0)
+
+    def calcset_wseitzr(self):
+        return self.depcheck_callback('wseitzr', ['npart', 'volume'], mddata.calc_wseitzr)
+
