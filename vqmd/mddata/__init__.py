@@ -204,15 +204,28 @@ class mddata(object):
         self.__dict__['props'] = self.cprops + self.tprops
 
     def __setattr__(self, name, value):
-        if hasattr(self,name):
+        if name in dir(self):
             warn_prop_immutable(self.__class__.__name__, name)
         else:
             self.set_props({name : value})
 
-    def calc_check(self, name, deps):
-        if hasattr(self, name):
-            warn_prop_nocalc(self.__class__.__name__, name)
-            return False
+    def __getattr__(self, name): # called if attribute is not found by other means (in self.__dict__, @property method...)
+        try:
+            calcfun = object.__getattribute__(self, 'calcset_' + name) # try to get calcset routine
+        except AttributeError: # if there is not calcset routine
+            raise AttributeError('\'mddata\' object has no attribute \'' + name + '\' and no corresponding calcset routine is present.')
+
+        try:
+            didset = calcfun()
+        except AttributeError:
+            didset = False
+
+        if not didset: # if setting was not successfull
+            raise AttributeError('\'mddata\' object has no attribute \'' + name + '\' and it could not be set via the corresponding calcset routine.')
+
+        return object.__getattribute__(self, name) # if successfull we can return
+
+    def calc_depcheck(self, name, deps):
         for dep in deps:
             if not hasattr(self, dep):
                 warn_prop_missdep(self.__class__.__name__, name, dep)
@@ -220,5 +233,20 @@ class mddata(object):
         return True
 
     def calcset_volume(self):
-        if self.calc_check('volume', ['cellmat']):
+        if self.calc_depcheck('volume', ['cellmat']):
             self.volume = np.abs(np.dot(np.cross(self.cellmat[0], self.cellmat[1]), self.cellmat[2]))
+            return True
+        return False
+
+    def calcset_density(self):
+        if hasattr(self, 'cmasses'):
+            if self.calc_depcheck('density', ['volume', 'cmasses']):
+                self.density = np.sum(self.cmasses) / self.volume
+                return True
+        elif hasattr(self, 'bmasses'):
+            if self.calc_depcheck('density', ['volume', 'bmasses']):
+                self.density = np.sum(self.bmasses) / self.volume
+                return True
+        else:
+            warn_prop_missdep(self.__class__.__name__, 'density', 'cmasses or bmasses')
+        return False
