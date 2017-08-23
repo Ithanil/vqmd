@@ -1,4 +1,4 @@
-from vqmd.mddata.mddata import mddata
+from vqmd.mddata import mddata
 from vqmd.mddata.ipi_mddata import ipi_mddata
 from vqmd.core.warnings import *
 

@@ -1,4 +1,4 @@
-from vqmd.mddata.mddata import mddata
+from vqmd.mddata import mddata
 from vqmd.mddata.warnings import *
 
 def append_idict(vlist, llist, idict, iname):
