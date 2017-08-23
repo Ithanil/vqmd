@@ -1,8 +1,8 @@
 # vqmd
-Tool for visualization and analysis of data from (Path Integral) Molecular Dynamics simulations.
-The aim is to support the output formats of various MD codes by parsing them to a common data structure before further processing occurs.
+vqmd is a tool for parsing, analysis and visualization of output from (Path Integral) Molecular Dynamics (MD) simulations. The tool is developed in Python and therefore the classes can be directly used in Python scripts. However, you can also configure it easily by a few lines of XML, so Python programming is no requirement.
+In the long run it is intended to support the output files of various MD codes, but at the moment only i-Pi MD is supported for parsing.
 
-Currently only supports I-Pi's output files as input. 
+The python scripts and XML inputs in the test directory serve as examples for the moment.
 
 Currently import statements seem to work only with Python 3. So if your /usr/bin/python points to Python 2.x, run the code explicitly via Python3.
 
