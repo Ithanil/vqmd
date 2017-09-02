@@ -148,6 +148,7 @@ def read_pdb(filedesc, **kwargs):
 
     return comment, cell, np.asarray(qatoms), np.asarray(names, dtype='|S4'), np.asarray(masses)
 
+
 def read_json(filedesc, **kwargs):
     """Reads a JSON-style file with i-pi style comments and creates an Atoms and Cell object.
 

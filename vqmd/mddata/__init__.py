@@ -84,116 +84,128 @@ class mddata(object):
 
             if name in self.__class__.csspnames:
                 if np.shape(newprop) == ():
-                    self.cssprops.append(name)
                     newprop = newprop.item()
-                elif np.shape(newprop) == (1,):
                     self.cssprops.append(name)
+                elif np.shape(newprop) == (1,):
                     newprop = newprop[0]
+                    self.cssprops.append(name)
                 else:
                     warn_prop_isnot('Constant system scalar', name, 'a scalar or list with shape (1,)')
                     continue
 
             elif name in self.__class__.csvpnames:
                 if np.shape(newprop) == (self.ndim,):
-                    self.csvprops.append(name)
                     newprop = np.array(newprop, dtype=float)
+                    self.csvprops.append(name)
                 else:
                     warn_prop_isnot('Constant system vector', name, 'a list with shape (ndim,)')
                     continue
 
             elif name in self.__class__.csmpnames:
                 if np.shape(newprop) == (self.ndim, self.ndim):
-                    self.csmprops.append(name)
                     newprop = np.array(newprop, dtype=float)
+                    self.csmprops.append(name)
                 else:
                     warn_prop_isnot('Constant system matrix', name, 'a list with shape (ndim, ndim)')
                     continue
 
             elif name in self.__class__.ccspnames:
                 if np.shape(newprop) == (self.npart,):
-                    self.ccsprops.append(name)
                     try: newprop = np.array(newprop, dtype=float)
                     except ValueError: pass
+                    self.ccsprops.append(name)
                 else:
                     warn_prop_isnot('Constant centroid scalar', name, 'a list with shape (npart,)')
                     continue
 
             elif name in self.__class__.ccvpnames:
                 if np.shape(newprop) == (self.npart, self.ndim):
-                    self.ccvprops.append(name)
                     newprop = np.array(newprop, dtype=float)
+                    self.ccvprops.append(name)
                 else:
                     warn_prop_isnot('Constant centroid vector', name, 'a list with shape (npart, ndim)')
                     continue
 
             elif name in self.__class__.cbspnames:
                 if np.shape(newprop) == (self.npart, self.nbead):
-                    self.cbsprops.append(name)
                     newprop = np.array(newprop, dtype=float)
+                    self.cbsprops.append(name)
                 else:
                     warn_prop_isnot('Constant bead scalar', name, 'a list with shape (npart, nbead)')
                     continue
 
             elif name in self.__class__.cbvpnames:
                 if np.shape(newprop) == (self.npart, self.nbead, self.ndim):
-                    self.cbvprops.append(name)
                     newprop = np.array(newprop, dtype=float)
+                    self.cbvprops.append(name)
                 else:
                     warn_prop_isnot('Constant bead vector', name, 'a list with shape (npart, nbead, ndim)')
                     continue
 
             elif name in self.__class__.tsspnames:
                 if np.shape(newprop) == (2, tlen):
+                    newprop = pd.Series(newprop[1], index = pd.Index(newprop[0], name='Time'), name = name)
                     self.tssprops.append(name)
-                    newprop = pd.Series(newprop[1], index = newprop[0])
                 else:
                     warn_prop_isnot('Time-dependent system scalar', name, 'a list with shape (2, *)')
                     continue
 
             elif name in self.__class__.tsvpnames:
-                if np.shape(newprop) == (2, tlen, self.ndim):
+                if np.shape(newprop) == (2, tlen) and all(np.shape(tprop) == (self.ndim,) for tprop in newprop[1]):
+                    flat_prop = [item for sublist in newprop[1] for item in sublist]
+                    mindex = pd.MultiIndex.from_product([newprop[0], ['x','y','z']], names=['Time', 'Dim'])
+                    newprop = pd.Series(flat_prop, index = mindex, name = name)
                     self.tsvprops.append(name)
-                    newprop = pd.Series(newprop[1])
                 else:
                     warn_prop_isnot('Time-dependent system vector', name, 'a list with shape (2, *, ndim)')
                     continue
 
             elif name in self.__class__.tsmpnames:
-                if np.shape(newprop) == (2, tlen, self.ndim, self.ndim):
+                if np.shape(newprop) == (2, tlen) and all(np.shape(tprop) == (self.ndim, self.ndim) for tprop in newprop[1]):
+                    flat_prop = [item for sublist1 in newprop[1] for sublist2 in sublist1 for item in sublist2]
+                    mindex = pd.MultiIndex.from_product([newprop[0], ['x','y','z'], ['x','y','z']], names=['Time', 'Dim1', 'Dim2'])
+                    newprop = pd.Series(flat_prop, index = mindex, name = name)
                     self.tsmprops.append(name)
-                    newprop = pd.Series(newprop[1])
                 else:
                     warn_prop_isnot('Time-dependent system matrix', name, 'a list with shape (2, *, ndim, ndim)')
                     continue
 
             elif name in self.__class__.tcspnames:
-                if np.shape(newprop) == (2, tlen, self.npart):
+                if np.shape(newprop) == (2, tlen) and all(np.shape(tprop) == (self.npart,) for tprop in newprop[1]):
+                    flat_prop = [item for sublist in newprop[1] for item in sublist]
+                    mindex = pd.MultiIndex.from_product([newprop[0], np.arange(1,self.npart+1)], names=['Time', 'Atom'])
+                    newprop = pd.Series(flat_prop, index = mindex, name = name)
                     self.tcsprops.append(name)
-                    newprop = pd.Series(newprop[1])
                 else:
                     warn_prop_isnot('Time-dependent centroid scalar', name, 'a list with shape (2, *, npart)')
                     continue
 
             elif name in self.__class__.tcvpnames:
-                if np.shape(newprop) == (2, tlen, self.npart, self.ndim):
+                if np.shape(newprop) == (2, tlen) and all(np.shape(tprop) == (self.npart, self.ndim) for tprop in newprop[1]):
+                    flat_prop = [item for sublist1 in newprop[1] for sublist2 in sublist1 for item in sublist2]
+                    mindex = pd.MultiIndex.from_product([newprop[0], np.arange(1,self.npart+1), ['x', 'y', 'z']], names=['Time', 'Atom', 'Dim'])
+                    newprop = pd.Series(flat_prop, index = mindex, name = name)
                     self.tcvprops.append(name)
-                    newprop = pd.Series(newprop[1])
                 else:
                     warn_prop_isnot('Time-dependent centroid vector', name, 'a list with shape (2, *, npart, ndim)')
                     continue
 
             elif name in self.__class__.tbspnames:
-                if np.shape(newprop) == (2, tlen, self.npart, self.nbead):
+                if np.shape(newprop) == (2, tlen) and all(np.shape(tprop) == (self.npart, self.nbead) for tprop in newprop[1]):
+                    flat_prop = [item for sublist1 in newprop[1] for sublist2 in sublist1 for item in sublist2]
+                    mindex = pd.MultiIndex.from_product([newprop[0], np.arange(1,self.npart+1), np.arange(1,self.nbead+1)], names=['Time', 'Atom', 'Bead'])
+                    newprop = pd.Series(flat_prop, index = mindex, name = name)
                     self.tbsprops.append(name)
-                    newprop = pd.Series(newprop[1])
                 else:
                     warn_prop_isnot('Time-dependent bead scalar', name, 'a list with shape (2, *, npart, nbead)')
                     continue
 
             elif name in self.__class__.tbvpnames:
-                if np.shape(newprop) == (2, tlen, self.npart, self.nbead, self.ndim):
+                if np.shape(newprop) == (2, tlen) and all(np.shape(tprop) == (self.npart, self.nbead, self.ndim) for tprop in newprop[1]):
+                    flat_prop = [item for sublist1 in newprop[1] for sublist2 in sublist1 for sublist3 in sublist2 for item in sublist3]
+                    mindex = pd.MultiIndex.from_product([newprop[0], np.arange(1,self.npart+1), np.arange(1,self.nbead+1), ['x', 'y', 'z']], names=['Time', 'Atom', 'Bead', 'Dim'])
+                    newprop = pd.Series(flat_prop, index = mindex, name = name)
                     self.tbvprops.append(name)
-                    newprop = pd.Series(newprop[1])
                 else:
                     warn_prop_isnot('Time-dependent bead vector', name, 'a list with shape (2, *, npart, nbead, ndim)')
                     continue
