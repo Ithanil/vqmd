@@ -1,0 +1,404 @@
+2
+# CELL(abcABC):  100.00000   100.00000   100.00000    90.00000    90.00000    90.00000  cell{atomic_unit}  Traj: x_centroid{atomic_unit} Step:           0  Bead:       0 
+       H  0.00000e+00  0.00000e+00 -6.50000e-01
+       H  0.00000e+00  0.00000e+00  6.50000e-01
+2
+# CELL(abcABC):  100.00000   100.00000   100.00000    90.00000    90.00000    90.00000  cell{atomic_unit}  Traj: x_centroid{atomic_unit} Step:           1  Bead:       0 
+       H -2.22992e-05 -5.49097e-05 -6.50259e-01
+       H  2.22992e-05  5.49097e-05  6.50259e-01
+2
+# CELL(abcABC):  100.00000   100.00000   100.00000    90.00000    90.00000    90.00000  cell{atomic_unit}  Traj: x_centroid{atomic_unit} Step:           2  Bead:       0 
+       H  3.26641e-05 -1.78959e-04 -6.50819e-01
+       H -3.26641e-05  1.78959e-04  6.50819e-01
+2
+# CELL(abcABC):  100.00000   100.00000   100.00000    90.00000    90.00000    90.00000  cell{atomic_unit}  Traj: x_centroid{atomic_unit} Step:           3  Bead:       0 
+       H  1.33654e-04 -1.91709e-04 -6.51573e-01
+       H -1.33654e-04  1.91709e-04  6.51573e-01
+2
+# CELL(abcABC):  100.00000   100.00000   100.00000    90.00000    90.00000    90.00000  cell{atomic_unit}  Traj: x_centroid{atomic_unit} Step:           4  Bead:       0 
+       H  3.74966e-04 -8.29224e-05 -6.52612e-01
+       H -3.74966e-04  8.29224e-05  6.52612e-01
+2
+# CELL(abcABC):  100.00000   100.00000   100.00000    90.00000    90.00000    90.00000  cell{atomic_unit}  Traj: x_centroid{atomic_unit} Step:           5  Bead:       0 
+       H  5.42715e-04  1.15488e-04 -6.53605e-01
+       H -5.42715e-04 -1.15488e-04  6.53605e-01
+2
+# CELL(abcABC):  100.00000   100.00000   100.00000    90.00000    90.00000    90.00000  cell{atomic_unit}  Traj: x_centroid{atomic_unit} Step:           6  Bead:       0 
+       H  6.64281e-04  4.44142e-04 -6.55054e-01
+       H -6.64281e-04 -4.44142e-04  6.55054e-01
+2
+# CELL(abcABC):  100.00000   100.00000   100.00000    90.00000    90.00000    90.00000  cell{atomic_unit}  Traj: x_centroid{atomic_unit} Step:           7  Bead:       0 
+       H  7.76405e-04  6.86570e-04 -6.56905e-01
+       H -7.76405e-04 -6.86570e-04  6.56905e-01
+2
+# CELL(abcABC):  100.00000   100.00000   100.00000    90.00000    90.00000    90.00000  cell{atomic_unit}  Traj: x_centroid{atomic_unit} Step:           8  Bead:       0 
+       H  1.78623e-04  1.32694e-03 -6.59026e-01
+       H -1.78623e-04 -1.32694e-03  6.59026e-01
+2
+# CELL(abcABC):  100.00000   100.00000   100.00000    90.00000    90.00000    90.00000  cell{atomic_unit}  Traj: x_centroid{atomic_unit} Step:           9  Bead:       0 
+       H -7.00659e-04  1.74129e-03 -6.61440e-01
+       H  7.00659e-04 -1.74129e-03  6.61440e-01
+2
+# CELL(abcABC):  100.00000   100.00000   100.00000    90.00000    90.00000    90.00000  cell{atomic_unit}  Traj: x_centroid{atomic_unit} Step:          10  Bead:       0 
+       H -1.62923e-03  2.22935e-03 -6.64007e-01
+       H  1.62923e-03 -2.22935e-03  6.64007e-01
+2
+# CELL(abcABC):  100.00000   100.00000   100.00000    90.00000    90.00000    90.00000  cell{atomic_unit}  Traj: x_centroid{atomic_unit} Step:          11  Bead:       0 
+       H -2.59059e-03  2.76758e-03 -6.66854e-01
+       H  2.59059e-03 -2.76758e-03  6.66854e-01
+2
+# CELL(abcABC):  100.00000   100.00000   100.00000    90.00000    90.00000    90.00000  cell{atomic_unit}  Traj: x_centroid{atomic_unit} Step:          12  Bead:       0 
+       H -3.65173e-03  3.20906e-03 -6.69962e-01
+       H  3.65173e-03 -3.20906e-03  6.69962e-01
+2
+# CELL(abcABC):  100.00000   100.00000   100.00000    90.00000    90.00000    90.00000  cell{atomic_unit}  Traj: x_centroid{atomic_unit} Step:          13  Bead:       0 
+       H -4.62771e-03  3.86073e-03 -6.73357e-01
+       H  4.62771e-03 -3.86073e-03  6.73357e-01
+2
+# CELL(abcABC):  100.00000   100.00000   100.00000    90.00000    90.00000    90.00000  cell{atomic_unit}  Traj: x_centroid{atomic_unit} Step:          14  Bead:       0 
+       H -5.28497e-03  4.24242e-03 -6.76937e-01
+       H  5.28497e-03 -4.24242e-03  6.76937e-01
+2
+# CELL(abcABC):  100.00000   100.00000   100.00000    90.00000    90.00000    90.00000  cell{atomic_unit}  Traj: x_centroid{atomic_unit} Step:          15  Bead:       0 
+       H -5.78928e-03  4.47531e-03 -6.80675e-01
+       H  5.78928e-03 -4.47531e-03  6.80675e-01
+2
+# CELL(abcABC):  100.00000   100.00000   100.00000    90.00000    90.00000    90.00000  cell{atomic_unit}  Traj: x_centroid{atomic_unit} Step:          16  Bead:       0 
+       H -6.40112e-03  4.58399e-03 -6.84500e-01
+       H  6.40112e-03 -4.58399e-03  6.84500e-01
+2
+# CELL(abcABC):  100.00000   100.00000   100.00000    90.00000    90.00000    90.00000  cell{atomic_unit}  Traj: x_centroid{atomic_unit} Step:          17  Bead:       0 
+       H -8.08456e-03  4.44750e-03 -6.89349e-01
+       H  8.08456e-03 -4.44750e-03  6.89349e-01
+2
+# CELL(abcABC):  100.00000   100.00000   100.00000    90.00000    90.00000    90.00000  cell{atomic_unit}  Traj: x_centroid{atomic_unit} Step:          18  Bead:       0 
+       H -9.85559e-03  4.29153e-03 -6.94098e-01
+       H  9.85559e-03 -4.29153e-03  6.94098e-01
+2
+# CELL(abcABC):  100.00000   100.00000   100.00000    90.00000    90.00000    90.00000  cell{atomic_unit}  Traj: x_centroid{atomic_unit} Step:          19  Bead:       0 
+       H -1.13535e-02  3.92816e-03 -6.99113e-01
+       H  1.13535e-02 -3.92816e-03  6.99113e-01
+2
+# CELL(abcABC):  100.00000   100.00000   100.00000    90.00000    90.00000    90.00000  cell{atomic_unit}  Traj: x_centroid{atomic_unit} Step:          20  Bead:       0 
+       H -1.28582e-02  3.53888e-03 -7.03955e-01
+       H  1.28582e-02 -3.53888e-03  7.03955e-01
+2
+# CELL(abcABC):  100.00000   100.00000   100.00000    90.00000    90.00000    90.00000  cell{atomic_unit}  Traj: x_centroid{atomic_unit} Step:          21  Bead:       0 
+       H -1.43721e-02  3.24027e-03 -7.08671e-01
+       H  1.43721e-02 -3.24027e-03  7.08671e-01
+2
+# CELL(abcABC):  100.00000   100.00000   100.00000    90.00000    90.00000    90.00000  cell{atomic_unit}  Traj: x_centroid{atomic_unit} Step:          22  Bead:       0 
+       H -1.58867e-02  3.05671e-03 -7.13432e-01
+       H  1.58867e-02 -3.05671e-03  7.13432e-01
+2
+# CELL(abcABC):  100.00000   100.00000   100.00000    90.00000    90.00000    90.00000  cell{atomic_unit}  Traj: x_centroid{atomic_unit} Step:          23  Bead:       0 
+       H -1.75538e-02  3.10760e-03 -7.17679e-01
+       H  1.75538e-02 -3.10760e-03  7.17679e-01
+2
+# CELL(abcABC):  100.00000   100.00000   100.00000    90.00000    90.00000    90.00000  cell{atomic_unit}  Traj: x_centroid{atomic_unit} Step:          24  Bead:       0 
+       H -1.90266e-02  3.09075e-03 -7.21911e-01
+       H  1.90266e-02 -3.09075e-03  7.21911e-01
+2
+# CELL(abcABC):  100.00000   100.00000   100.00000    90.00000    90.00000    90.00000  cell{atomic_unit}  Traj: x_centroid{atomic_unit} Step:          25  Bead:       0 
+       H -2.02427e-02  3.14083e-03 -7.25796e-01
+       H  2.02427e-02 -3.14083e-03  7.25796e-01
+2
+# CELL(abcABC):  100.00000   100.00000   100.00000    90.00000    90.00000    90.00000  cell{atomic_unit}  Traj: x_centroid{atomic_unit} Step:          26  Bead:       0 
+       H -2.14111e-02  3.26675e-03 -7.29291e-01
+       H  2.14111e-02 -3.26675e-03  7.29291e-01
+2
+# CELL(abcABC):  100.00000   100.00000   100.00000    90.00000    90.00000    90.00000  cell{atomic_unit}  Traj: x_centroid{atomic_unit} Step:          27  Bead:       0 
+       H -2.25215e-02  3.54329e-03 -7.32080e-01
+       H  2.25215e-02 -3.54329e-03  7.32080e-01
+2
+# CELL(abcABC):  100.00000   100.00000   100.00000    90.00000    90.00000    90.00000  cell{atomic_unit}  Traj: x_centroid{atomic_unit} Step:          28  Bead:       0 
+       H -2.37329e-02  3.60154e-03 -7.34351e-01
+       H  2.37329e-02 -3.60154e-03  7.34351e-01
+2
+# CELL(abcABC):  100.00000   100.00000   100.00000    90.00000    90.00000    90.00000  cell{atomic_unit}  Traj: x_centroid{atomic_unit} Step:          29  Bead:       0 
+       H -2.48946e-02  3.70629e-03 -7.36290e-01
+       H  2.48946e-02 -3.70629e-03  7.36290e-01
+2
+# CELL(abcABC):  100.00000   100.00000   100.00000    90.00000    90.00000    90.00000  cell{atomic_unit}  Traj: x_centroid{atomic_unit} Step:          30  Bead:       0 
+       H -2.59059e-02  3.65318e-03 -7.37838e-01
+       H  2.59059e-02 -3.65318e-03  7.37838e-01
+2
+# CELL(abcABC):  100.00000   100.00000   100.00000    90.00000    90.00000    90.00000  cell{atomic_unit}  Traj: x_centroid{atomic_unit} Step:          31  Bead:       0 
+       H -2.68193e-02  3.55550e-03 -7.38937e-01
+       H  2.68193e-02 -3.55550e-03  7.38937e-01
+2
+# CELL(abcABC):  100.00000   100.00000   100.00000    90.00000    90.00000    90.00000  cell{atomic_unit}  Traj: x_centroid{atomic_unit} Step:          32  Bead:       0 
+       H -2.76626e-02  3.41227e-03 -7.39608e-01
+       H  2.76626e-02 -3.41227e-03  7.39608e-01
+2
+# CELL(abcABC):  100.00000   100.00000   100.00000    90.00000    90.00000    90.00000  cell{atomic_unit}  Traj: x_centroid{atomic_unit} Step:          33  Bead:       0 
+       H -2.84941e-02  2.81114e-03 -7.40060e-01
+       H  2.84941e-02 -2.81114e-03  7.40060e-01
+2
+# CELL(abcABC):  100.00000   100.00000   100.00000    90.00000    90.00000    90.00000  cell{atomic_unit}  Traj: x_centroid{atomic_unit} Step:          34  Bead:       0 
+       H -2.92243e-02  2.10161e-03 -7.40118e-01
+       H  2.92243e-02 -2.10161e-03  7.40118e-01
+2
+# CELL(abcABC):  100.00000   100.00000   100.00000    90.00000    90.00000    90.00000  cell{atomic_unit}  Traj: x_centroid{atomic_unit} Step:          35  Bead:       0 
+       H -2.98876e-02  1.40766e-03 -7.39765e-01
+       H  2.98876e-02 -1.40766e-03  7.39765e-01
+2
+# CELL(abcABC):  100.00000   100.00000   100.00000    90.00000    90.00000    90.00000  cell{atomic_unit}  Traj: x_centroid{atomic_unit} Step:          36  Bead:       0 
+       H -3.03143e-02  7.12022e-04 -7.38841e-01
+       H  3.03143e-02 -7.12022e-04  7.38841e-01
+2
+# CELL(abcABC):  100.00000   100.00000   100.00000    90.00000    90.00000    90.00000  cell{atomic_unit}  Traj: x_centroid{atomic_unit} Step:          37  Bead:       0 
+       H -3.10113e-02  1.83943e-04 -7.37554e-01
+       H  3.10113e-02 -1.83943e-04  7.37554e-01
+2
+# CELL(abcABC):  100.00000   100.00000   100.00000    90.00000    90.00000    90.00000  cell{atomic_unit}  Traj: x_centroid{atomic_unit} Step:          38  Bead:       0 
+       H -3.17695e-02 -2.93733e-04 -7.35977e-01
+       H  3.17695e-02  2.93733e-04  7.35977e-01
+2
+# CELL(abcABC):  100.00000   100.00000   100.00000    90.00000    90.00000    90.00000  cell{atomic_unit}  Traj: x_centroid{atomic_unit} Step:          39  Bead:       0 
+       H -3.25370e-02 -9.13744e-04 -7.33606e-01
+       H  3.25370e-02  9.13744e-04  7.33606e-01
+2
+# CELL(abcABC):  100.00000   100.00000   100.00000    90.00000    90.00000    90.00000  cell{atomic_unit}  Traj: x_centroid{atomic_unit} Step:          40  Bead:       0 
+       H -3.33026e-02 -1.44926e-03 -7.30928e-01
+       H  3.33026e-02  1.44926e-03  7.30928e-01
+2
+# CELL(abcABC):  100.00000   100.00000   100.00000    90.00000    90.00000    90.00000  cell{atomic_unit}  Traj: x_centroid{atomic_unit} Step:          41  Bead:       0 
+       H -3.40536e-02 -2.00951e-03 -7.27923e-01
+       H  3.40536e-02  2.00951e-03  7.27923e-01
+2
+# CELL(abcABC):  100.00000   100.00000   100.00000    90.00000    90.00000    90.00000  cell{atomic_unit}  Traj: x_centroid{atomic_unit} Step:          42  Bead:       0 
+       H -3.49688e-02 -2.71531e-03 -7.24514e-01
+       H  3.49688e-02  2.71531e-03  7.24514e-01
+2
+# CELL(abcABC):  100.00000   100.00000   100.00000    90.00000    90.00000    90.00000  cell{atomic_unit}  Traj: x_centroid{atomic_unit} Step:          43  Bead:       0 
+       H -3.58596e-02 -3.45283e-03 -7.20615e-01
+       H  3.58596e-02  3.45283e-03  7.20615e-01
+2
+# CELL(abcABC):  100.00000   100.00000   100.00000    90.00000    90.00000    90.00000  cell{atomic_unit}  Traj: x_centroid{atomic_unit} Step:          44  Bead:       0 
+       H -3.69266e-02 -4.23326e-03 -7.16589e-01
+       H  3.69266e-02  4.23326e-03  7.16589e-01
+2
+# CELL(abcABC):  100.00000   100.00000   100.00000    90.00000    90.00000    90.00000  cell{atomic_unit}  Traj: x_centroid{atomic_unit} Step:          45  Bead:       0 
+       H -3.80015e-02 -5.21531e-03 -7.12388e-01
+       H  3.80015e-02  5.21531e-03  7.12388e-01
+2
+# CELL(abcABC):  100.00000   100.00000   100.00000    90.00000    90.00000    90.00000  cell{atomic_unit}  Traj: x_centroid{atomic_unit} Step:          46  Bead:       0 
+       H -3.91449e-02 -6.01826e-03 -7.08094e-01
+       H  3.91449e-02  6.01826e-03  7.08094e-01
+2
+# CELL(abcABC):  100.00000   100.00000   100.00000    90.00000    90.00000    90.00000  cell{atomic_unit}  Traj: x_centroid{atomic_unit} Step:          47  Bead:       0 
+       H -4.02751e-02 -7.53322e-03 -7.03274e-01
+       H  4.02751e-02  7.53322e-03  7.03274e-01
+2
+# CELL(abcABC):  100.00000   100.00000   100.00000    90.00000    90.00000    90.00000  cell{atomic_unit}  Traj: x_centroid{atomic_unit} Step:          48  Bead:       0 
+       H -4.13823e-02 -8.91448e-03 -6.98235e-01
+       H  4.13823e-02  8.91448e-03  6.98235e-01
+2
+# CELL(abcABC):  100.00000   100.00000   100.00000    90.00000    90.00000    90.00000  cell{atomic_unit}  Traj: x_centroid{atomic_unit} Step:          49  Bead:       0 
+       H -4.24428e-02 -1.02904e-02 -6.93228e-01
+       H  4.24428e-02  1.02904e-02  6.93228e-01
+2
+# CELL(abcABC):  100.00000   100.00000   100.00000    90.00000    90.00000    90.00000  cell{atomic_unit}  Traj: x_centroid{atomic_unit} Step:          50  Bead:       0 
+       H -4.34662e-02 -1.17908e-02 -6.88285e-01
+       H  4.34662e-02  1.17908e-02  6.88285e-01
+2
+# CELL(abcABC):  100.00000   100.00000   100.00000    90.00000    90.00000    90.00000  cell{atomic_unit}  Traj: x_centroid{atomic_unit} Step:          51  Bead:       0 
+       H -4.45874e-02 -1.33495e-02 -6.83160e-01
+       H  4.45874e-02  1.33495e-02  6.83160e-01
+2
+# CELL(abcABC):  100.00000   100.00000   100.00000    90.00000    90.00000    90.00000  cell{atomic_unit}  Traj: x_centroid{atomic_unit} Step:          52  Bead:       0 
+       H -4.59053e-02 -1.50194e-02 -6.77946e-01
+       H  4.59053e-02  1.50194e-02  6.77946e-01
+2
+# CELL(abcABC):  100.00000   100.00000   100.00000    90.00000    90.00000    90.00000  cell{atomic_unit}  Traj: x_centroid{atomic_unit} Step:          53  Bead:       0 
+       H -4.73332e-02 -1.67996e-02 -6.72842e-01
+       H  4.73332e-02  1.67996e-02  6.72842e-01
+2
+# CELL(abcABC):  100.00000   100.00000   100.00000    90.00000    90.00000    90.00000  cell{atomic_unit}  Traj: x_centroid{atomic_unit} Step:          54  Bead:       0 
+       H -4.88410e-02 -1.86013e-02 -6.68005e-01
+       H  4.88410e-02  1.86013e-02  6.68005e-01
+2
+# CELL(abcABC):  100.00000   100.00000   100.00000    90.00000    90.00000    90.00000  cell{atomic_unit}  Traj: x_centroid{atomic_unit} Step:          55  Bead:       0 
+       H -5.05858e-02 -2.05766e-02 -6.63537e-01
+       H  5.05858e-02  2.05766e-02  6.63537e-01
+2
+# CELL(abcABC):  100.00000   100.00000   100.00000    90.00000    90.00000    90.00000  cell{atomic_unit}  Traj: x_centroid{atomic_unit} Step:          56  Bead:       0 
+       H -5.23809e-02 -2.22716e-02 -6.59437e-01
+       H  5.23809e-02  2.22716e-02  6.59437e-01
+2
+# CELL(abcABC):  100.00000   100.00000   100.00000    90.00000    90.00000    90.00000  cell{atomic_unit}  Traj: x_centroid{atomic_unit} Step:          57  Bead:       0 
+       H -5.40033e-02 -2.39726e-02 -6.55564e-01
+       H  5.40033e-02  2.39726e-02  6.55564e-01
+2
+# CELL(abcABC):  100.00000   100.00000   100.00000    90.00000    90.00000    90.00000  cell{atomic_unit}  Traj: x_centroid{atomic_unit} Step:          58  Bead:       0 
+       H -5.56827e-02 -2.54975e-02 -6.52235e-01
+       H  5.56827e-02  2.54975e-02  6.52235e-01
+2
+# CELL(abcABC):  100.00000   100.00000   100.00000    90.00000    90.00000    90.00000  cell{atomic_unit}  Traj: x_centroid{atomic_unit} Step:          59  Bead:       0 
+       H -5.71162e-02 -2.71987e-02 -6.49118e-01
+       H  5.71162e-02  2.71987e-02  6.49118e-01
+2
+# CELL(abcABC):  100.00000   100.00000   100.00000    90.00000    90.00000    90.00000  cell{atomic_unit}  Traj: x_centroid{atomic_unit} Step:          60  Bead:       0 
+       H -5.84641e-02 -2.90782e-02 -6.46484e-01
+       H  5.84641e-02  2.90782e-02  6.46484e-01
+2
+# CELL(abcABC):  100.00000   100.00000   100.00000    90.00000    90.00000    90.00000  cell{atomic_unit}  Traj: x_centroid{atomic_unit} Step:          61  Bead:       0 
+       H -5.97799e-02 -3.09795e-02 -6.44468e-01
+       H  5.97799e-02  3.09795e-02  6.44468e-01
+2
+# CELL(abcABC):  100.00000   100.00000   100.00000    90.00000    90.00000    90.00000  cell{atomic_unit}  Traj: x_centroid{atomic_unit} Step:          62  Bead:       0 
+       H -6.09443e-02 -3.30446e-02 -6.42934e-01
+       H  6.09443e-02  3.30446e-02  6.42934e-01
+2
+# CELL(abcABC):  100.00000   100.00000   100.00000    90.00000    90.00000    90.00000  cell{atomic_unit}  Traj: x_centroid{atomic_unit} Step:          63  Bead:       0 
+       H -6.22516e-02 -3.52224e-02 -6.41883e-01
+       H  6.22516e-02  3.52224e-02  6.41883e-01
+2
+# CELL(abcABC):  100.00000   100.00000   100.00000    90.00000    90.00000    90.00000  cell{atomic_unit}  Traj: x_centroid{atomic_unit} Step:          64  Bead:       0 
+       H -6.37416e-02 -3.76358e-02 -6.40930e-01
+       H  6.37416e-02  3.76358e-02  6.40930e-01
+2
+# CELL(abcABC):  100.00000   100.00000   100.00000    90.00000    90.00000    90.00000  cell{atomic_unit}  Traj: x_centroid{atomic_unit} Step:          65  Bead:       0 
+       H -6.50407e-02 -4.02110e-02 -6.40466e-01
+       H  6.50407e-02  4.02110e-02  6.40466e-01
+2
+# CELL(abcABC):  100.00000   100.00000   100.00000    90.00000    90.00000    90.00000  cell{atomic_unit}  Traj: x_centroid{atomic_unit} Step:          66  Bead:       0 
+       H -6.66286e-02 -4.28112e-02 -6.40626e-01
+       H  6.66286e-02  4.28112e-02  6.40626e-01
+2
+# CELL(abcABC):  100.00000   100.00000   100.00000    90.00000    90.00000    90.00000  cell{atomic_unit}  Traj: x_centroid{atomic_unit} Step:          67  Bead:       0 
+       H -6.80697e-02 -4.53439e-02 -6.38913e-01
+       H  6.80697e-02  4.53439e-02  6.38913e-01
+2
+# CELL(abcABC):  100.00000   100.00000   100.00000    90.00000    90.00000    90.00000  cell{atomic_unit}  Traj: x_centroid{atomic_unit} Step:          68  Bead:       0 
+       H -6.97490e-02 -4.77471e-02 -6.37858e-01
+       H  6.97490e-02  4.77471e-02  6.37858e-01
+2
+# CELL(abcABC):  100.00000   100.00000   100.00000    90.00000    90.00000    90.00000  cell{atomic_unit}  Traj: x_centroid{atomic_unit} Step:          69  Bead:       0 
+       H -7.14439e-02 -5.02118e-02 -6.37303e-01
+       H  7.14439e-02  5.02118e-02  6.37303e-01
+2
+# CELL(abcABC):  100.00000   100.00000   100.00000    90.00000    90.00000    90.00000  cell{atomic_unit}  Traj: x_centroid{atomic_unit} Step:          70  Bead:       0 
+       H -7.33647e-02 -5.28057e-02 -6.37154e-01
+       H  7.33647e-02  5.28057e-02  6.37154e-01
+2
+# CELL(abcABC):  100.00000   100.00000   100.00000    90.00000    90.00000    90.00000  cell{atomic_unit}  Traj: x_centroid{atomic_unit} Step:          71  Bead:       0 
+       H -7.53953e-02 -5.54819e-02 -6.37516e-01
+       H  7.53953e-02  5.54819e-02  6.37516e-01
+2
+# CELL(abcABC):  100.00000   100.00000   100.00000    90.00000    90.00000    90.00000  cell{atomic_unit}  Traj: x_centroid{atomic_unit} Step:          72  Bead:       0 
+       H -7.74046e-02 -5.82354e-02 -6.38300e-01
+       H  7.74046e-02  5.82354e-02  6.38300e-01
+2
+# CELL(abcABC):  100.00000   100.00000   100.00000    90.00000    90.00000    90.00000  cell{atomic_unit}  Traj: x_centroid{atomic_unit} Step:          73  Bead:       0 
+       H -7.92900e-02 -6.10398e-02 -6.39649e-01
+       H  7.92900e-02  6.10398e-02  6.39649e-01
+2
+# CELL(abcABC):  100.00000   100.00000   100.00000    90.00000    90.00000    90.00000  cell{atomic_unit}  Traj: x_centroid{atomic_unit} Step:          74  Bead:       0 
+       H -8.10954e-02 -6.37000e-02 -6.41538e-01
+       H  8.10954e-02  6.37000e-02  6.41538e-01
+2
+# CELL(abcABC):  100.00000   100.00000   100.00000    90.00000    90.00000    90.00000  cell{atomic_unit}  Traj: x_centroid{atomic_unit} Step:          75  Bead:       0 
+       H -8.32614e-02 -6.62738e-02 -6.44126e-01
+       H  8.32614e-02  6.62738e-02  6.44126e-01
+2
+# CELL(abcABC):  100.00000   100.00000   100.00000    90.00000    90.00000    90.00000  cell{atomic_unit}  Traj: x_centroid{atomic_unit} Step:          76  Bead:       0 
+       H -8.54083e-02 -6.88941e-02 -6.46947e-01
+       H  8.54083e-02  6.88941e-02  6.46947e-01
+2
+# CELL(abcABC):  100.00000   100.00000   100.00000    90.00000    90.00000    90.00000  cell{atomic_unit}  Traj: x_centroid{atomic_unit} Step:          77  Bead:       0 
+       H -8.76440e-02 -7.11547e-02 -6.50188e-01
+       H  8.76440e-02  7.11547e-02  6.50188e-01
+2
+# CELL(abcABC):  100.00000   100.00000   100.00000    90.00000    90.00000    90.00000  cell{atomic_unit}  Traj: x_centroid{atomic_unit} Step:          78  Bead:       0 
+       H -8.96574e-02 -7.36783e-02 -6.53080e-01
+       H  8.96574e-02  7.36783e-02  6.53080e-01
+2
+# CELL(abcABC):  100.00000   100.00000   100.00000    90.00000    90.00000    90.00000  cell{atomic_unit}  Traj: x_centroid{atomic_unit} Step:          79  Bead:       0 
+       H -9.16618e-02 -7.62981e-02 -6.56246e-01
+       H  9.16618e-02  7.62981e-02  6.56246e-01
+2
+# CELL(abcABC):  100.00000   100.00000   100.00000    90.00000    90.00000    90.00000  cell{atomic_unit}  Traj: x_centroid{atomic_unit} Step:          80  Bead:       0 
+       H -9.37258e-02 -7.89301e-02 -6.59436e-01
+       H  9.37258e-02  7.89301e-02  6.59436e-01
+2
+# CELL(abcABC):  100.00000   100.00000   100.00000    90.00000    90.00000    90.00000  cell{atomic_unit}  Traj: x_centroid{atomic_unit} Step:          81  Bead:       0 
+       H -9.60464e-02 -8.16178e-02 -6.62771e-01
+       H  9.60464e-02  8.16178e-02  6.62771e-01
+2
+# CELL(abcABC):  100.00000   100.00000   100.00000    90.00000    90.00000    90.00000  cell{atomic_unit}  Traj: x_centroid{atomic_unit} Step:          82  Bead:       0 
+       H -9.84029e-02 -8.41497e-02 -6.66068e-01
+       H  9.84029e-02  8.41497e-02  6.66068e-01
+2
+# CELL(abcABC):  100.00000   100.00000   100.00000    90.00000    90.00000    90.00000  cell{atomic_unit}  Traj: x_centroid{atomic_unit} Step:          83  Bead:       0 
+       H -1.00511e-01 -8.68438e-02 -6.69654e-01
+       H  1.00511e-01  8.68438e-02  6.69654e-01
+2
+# CELL(abcABC):  100.00000   100.00000   100.00000    90.00000    90.00000    90.00000  cell{atomic_unit}  Traj: x_centroid{atomic_unit} Step:          84  Bead:       0 
+       H -1.02888e-01 -9.01137e-02 -6.71988e-01
+       H  1.02888e-01  9.01137e-02  6.71988e-01
+2
+# CELL(abcABC):  100.00000   100.00000   100.00000    90.00000    90.00000    90.00000  cell{atomic_unit}  Traj: x_centroid{atomic_unit} Step:          85  Bead:       0 
+       H -1.05253e-01 -9.34913e-02 -6.74145e-01
+       H  1.05253e-01  9.34913e-02  6.74145e-01
+2
+# CELL(abcABC):  100.00000   100.00000   100.00000    90.00000    90.00000    90.00000  cell{atomic_unit}  Traj: x_centroid{atomic_unit} Step:          86  Bead:       0 
+       H -1.07754e-01 -9.67638e-02 -6.76331e-01
+       H  1.07754e-01  9.67638e-02  6.76331e-01
+2
+# CELL(abcABC):  100.00000   100.00000   100.00000    90.00000    90.00000    90.00000  cell{atomic_unit}  Traj: x_centroid{atomic_unit} Step:          87  Bead:       0 
+       H -1.10384e-01 -9.99334e-02 -6.78470e-01
+       H  1.10384e-01  9.99334e-02  6.78470e-01
+2
+# CELL(abcABC):  100.00000   100.00000   100.00000    90.00000    90.00000    90.00000  cell{atomic_unit}  Traj: x_centroid{atomic_unit} Step:          88  Bead:       0 
+       H -1.12980e-01 -1.03078e-01 -6.80383e-01
+       H  1.12980e-01  1.03078e-01  6.80383e-01
+2
+# CELL(abcABC):  100.00000   100.00000   100.00000    90.00000    90.00000    90.00000  cell{atomic_unit}  Traj: x_centroid{atomic_unit} Step:          89  Bead:       0 
+       H -1.15678e-01 -1.06304e-01 -6.82130e-01
+       H  1.15678e-01  1.06304e-01  6.82130e-01
+2
+# CELL(abcABC):  100.00000   100.00000   100.00000    90.00000    90.00000    90.00000  cell{atomic_unit}  Traj: x_centroid{atomic_unit} Step:          90  Bead:       0 
+       H -1.19163e-01 -1.09929e-01 -6.83813e-01
+       H  1.19163e-01  1.09929e-01  6.83813e-01
+2
+# CELL(abcABC):  100.00000   100.00000   100.00000    90.00000    90.00000    90.00000  cell{atomic_unit}  Traj: x_centroid{atomic_unit} Step:          91  Bead:       0 
+       H -1.22672e-01 -1.13593e-01 -6.85436e-01
+       H  1.22672e-01  1.13593e-01  6.85436e-01
+2
+# CELL(abcABC):  100.00000   100.00000   100.00000    90.00000    90.00000    90.00000  cell{atomic_unit}  Traj: x_centroid{atomic_unit} Step:          92  Bead:       0 
+       H -1.26020e-01 -1.17507e-01 -6.86908e-01
+       H  1.26020e-01  1.17507e-01  6.86908e-01
+2
+# CELL(abcABC):  100.00000   100.00000   100.00000    90.00000    90.00000    90.00000  cell{atomic_unit}  Traj: x_centroid{atomic_unit} Step:          93  Bead:       0 
+       H -1.29459e-01 -1.21337e-01 -6.88358e-01
+       H  1.29459e-01  1.21337e-01  6.88358e-01
+2
+# CELL(abcABC):  100.00000   100.00000   100.00000    90.00000    90.00000    90.00000  cell{atomic_unit}  Traj: x_centroid{atomic_unit} Step:          94  Bead:       0 
+       H -1.33107e-01 -1.25192e-01 -6.89650e-01
+       H  1.33107e-01  1.25192e-01  6.89650e-01
+2
+# CELL(abcABC):  100.00000   100.00000   100.00000    90.00000    90.00000    90.00000  cell{atomic_unit}  Traj: x_centroid{atomic_unit} Step:          95  Bead:       0 
+       H -1.36497e-01 -1.28979e-01 -6.90819e-01
+       H  1.36497e-01  1.28979e-01  6.90819e-01
+2
+# CELL(abcABC):  100.00000   100.00000   100.00000    90.00000    90.00000    90.00000  cell{atomic_unit}  Traj: x_centroid{atomic_unit} Step:          96  Bead:       0 
+       H -1.39652e-01 -1.32648e-01 -6.91904e-01
+       H  1.39652e-01  1.32648e-01  6.91904e-01
+2
+# CELL(abcABC):  100.00000   100.00000   100.00000    90.00000    90.00000    90.00000  cell{atomic_unit}  Traj: x_centroid{atomic_unit} Step:          97  Bead:       0 
+       H -1.42775e-01 -1.36521e-01 -6.92805e-01
+       H  1.42775e-01  1.36521e-01  6.92805e-01
+2
+# CELL(abcABC):  100.00000   100.00000   100.00000    90.00000    90.00000    90.00000  cell{atomic_unit}  Traj: x_centroid{atomic_unit} Step:          98  Bead:       0 
+       H -1.45932e-01 -1.39988e-01 -6.93318e-01
+       H  1.45932e-01  1.39988e-01  6.93318e-01
+2
+# CELL(abcABC):  100.00000   100.00000   100.00000    90.00000    90.00000    90.00000  cell{atomic_unit}  Traj: x_centroid{atomic_unit} Step:          99  Bead:       0 
+       H -1.48992e-01 -1.43369e-01 -6.93182e-01
+       H  1.48992e-01  1.43369e-01  6.93182e-01
+2
+# CELL(abcABC):  100.00000   100.00000   100.00000    90.00000    90.00000    90.00000  cell{atomic_unit}  Traj: x_centroid{atomic_unit} Step:         100  Bead:       0 
+       H -1.51969e-01 -1.46624e-01 -6.92840e-01
+       H  1.51969e-01  1.46624e-01  6.92840e-01

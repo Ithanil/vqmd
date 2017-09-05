@@ -28,4 +28,4 @@ epotdata = pd.DataFrame({'NFL' : testdata1.epot, 'DO' : testdata2.epot, 'LGV' : 
 epotdata.plot(ax=ax2, legend=True)
 plt.setp(ax2, xlabel='Time [fs]', ylabel='Potential Energy [H]')
 
-fig.show()
+plt.show()

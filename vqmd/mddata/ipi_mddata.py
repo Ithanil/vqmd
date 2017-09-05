@@ -10,7 +10,9 @@ according to the terms contained in the LICENSE file.
 """
 
 from vqmd.mddata import mddata
+from vqmd.mddata.ipi_readers import *
 from vqmd.mddata.warnings import *
+import os
 
 def append_idict(vlist, llist, idict, iname):
     # Appends to list vlist a float value from line split list llist,
@@ -94,4 +96,25 @@ class ipi_mddata(mddata):
             if vname in obsdict and vname in kwnamedict:
                 seriesdict[kwnamedict[vname]] = [timelist, vlist]
 
-        super(ipi_mddata, self).__init__(path, 0, 1, 3, seriesdict)
+        natom = 1
+        nbead = 1
+        ndim = 3
+
+        cposfile = path + '.pos.xyz'
+        if os.path.exists(cposfile):
+            cposdata = list(iter_file_name(cposfile))
+
+            natom = cposdata[0]["natoms"]
+            cmasses = cposdata[0]["masses"]
+            names = cposdata[0]["names"]
+            cellmat = cposdata[0]["cell"]
+            #tcellmatlist = [idict["cell"] for idict in cposdata]
+            cposlist = [idict["data"].reshape(natom, ndim) for idict in cposdata]
+
+            seriesdict['cmasses'] = cmasses
+            seriesdict['names'] = names
+            seriesdict['cellmat'] = cellmat
+            #seriesdict['tcellmat'] = [timelist, tcellmatlist]
+            seriesdict['cpos'] = [timelist, cposlist]
+
+        super(ipi_mddata, self).__init__(path, natom, nbead, ndim, seriesdict)
