@@ -10,7 +10,7 @@ if not dir_root in sys.path:
     sys.path.insert(0, dir_root)
 
 from vqmd import vqmd_node
-from lib.xml_io import xml_parse_file
+from vqmd.lib.xml_io import xml_parse_file
 
 if __name__ == '__main__':
     import test_ipi_mddata as tim

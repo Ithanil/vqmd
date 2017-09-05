@@ -14,7 +14,7 @@ Functions:
 """
 
 from vqmd.core import core
-from lib.xml_io import xml_parse_file
+from vqmd.lib.xml_io import xml_parse_file
 
 def vqmd_node(xmlin):
 
