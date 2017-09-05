@@ -11,6 +11,25 @@ according to the terms contained in the LICENSE file.
 """
 
 import numpy as np
+import math
+import sys
+import os
+import re
+import copy
+
+from vqmd.lib.units import Elements
+
+mode_map = {
+    "bin":  "binary",
+}
+
+io_map = {
+    "read":       "read_%s",
+}
+
+cell_re = [re.compile('CELL[\(\[\{]abcABC[\)\]\}]: ([-+0-9\.Ee ]*)\s*'),
+           re.compile('CELL[\(\[\{]GENH[\)\]\}]: ([-+0-9\.?Ee ]*)\s*'),
+           re.compile('CELL[\(\[\{]H[\)\]\}]: ([-+0-9\.?Ee ]*)\s*')]
 
 def read_xyz(filedesc, **kwargs):
     """Reads an XYZ-style file with i-PI style comments and returns data in raw format for further units transformation
@@ -24,7 +43,7 @@ def read_xyz(filedesc, **kwargs):
     """
 
     try:
-        natoms = int(filedesc.next())
+        natoms = int(filedesc.__next__())
     except (StopIteration, ValueError):
         raise EOFError
 
@@ -33,14 +52,14 @@ def read_xyz(filedesc, **kwargs):
 
     # natoms = int(natoms)
 
-    comment = filedesc.next()
+    comment = filedesc.__next__()
 
     # Extracting cell
     cell = [key.search(comment) for key in cell_re]
     usegenh = False
     if cell[0] is not None:    # abcABC
         a, b, c  = [float(x) for x in cell[0].group(1).split()[:3]]
-        alpha, beta, gamma = [float(x) * deg2rad
+        alpha, beta, gamma = [float(x) * np.pi/180.0
                               for x in cell[0].group(1).split()[3:6]]
         h = abc2h(a, b, c, alpha, beta, gamma)
     elif cell[1] is not None:  # GENH
@@ -149,57 +168,126 @@ def read_pdb(filedesc, **kwargs):
     return comment, cell, np.asarray(qatoms), np.asarray(names, dtype='|S4'), np.asarray(masses)
 
 
-def read_json(filedesc, **kwargs):
-    """Reads a JSON-style file with i-pi style comments and creates an Atoms and Cell object.
+def read_binary(filedesc, **kwarg):
+    try: 
+        cell = np.fromfile(filedesc, dtype=float, count=9)
+        cell.shape = (3,3)
+        nat = np.fromfile(filedesc, dtype=int, count=1)[0]
+        qatoms = np.fromfile(filedesc, dtype=float, count=3*nat)
+        nat = np.fromfile(filedesc, dtype=int, count=1)[0]
+        names = np.fromfile(filedesc, dtype='|S1', count=nat)
+        names = "".join(names)
+        names = names.split('|')
+        masses = np.zeros(len(names))
+    except (StopIteration,ValueError):
+        raise EOFError
+    return ("", cell, qatoms, names, masses)
+
+
+def read_to_dict(comment, cell, qatoms, names, masses, output='objects'):
+    """Convert the data in the file to a dictionary
 
     Args:
-        filedesc: An open readable file object from a json formatted file with i-PI header comments.
-
-    Returns:
-        An Atoms object with the appropriate atom labels, masses and positions.
-        A Cell object.
+        comment:
+        cell:
+        qatoms:
+        names:
+        masses:
+        output:
     """
 
-    try:
-        line = json.loads(filedesc.readline())
-    except ValueError:
-        raise EOFError("The file descriptor hit EOF.")
-    atoms = Atoms(line[0])
-    atoms.q = np.asarray(line[8])
-    atoms.names = np.asarray(line[9], dtype='|S4')
-    atoms.m = np.asarray(map(Elements.mass, atoms.names))
-
-    a = float(line[1])
-    b = float(line[2])
-    c = float(line[3])
-    alpha = float(line[4]) * np.pi/180
-    beta = float(line[5]) * np.pi/180
-    gamma = float(line[6]) * np.pi/180
-    h = abc2h(a, b, c, alpha, beta, gamma)
-    cell = Cell(h)
-
     return {
-        "atoms": atoms,
-        "cell": cell
+        "data": qatoms,
+        "masses": masses,
+        "names": names,
+        "natoms": len(names),
+        "cell": cell,
     }
 
 
-def iter_json(filedesc, **kwargs):
-    """Takes a json-style file and yields one Atoms object after another.
+def _get_io_function(mode, io):
+    """Returns io function with specified mode.
+
+    This will be determined on the fly based on file name extension and
+    available ipi/utils/io/backends/io_*.py backends.
 
     Args:
-        filedesc: An open readable file object from a json formatted file.
+        mode: Which format has the file? e.g. "pdb", "xml" or "xyz"
+        io: One of "print_path", "print", "read" or "iter"
+    """
+
+    mode = mode[mode.find(".")+1:]
+    if mode in mode_map:
+        mode = mode_map[mode]
+
+    try:
+        func = getattr(sys.modules[__name__], io_map[io] % mode)
+    except KeyError:
+        print("Error: io %s is not supported with mode %s." % (io, mode))
+        sys.exit()
+
+    return func
+
+
+def read_file(mode, filedesc, output="objects", **kwargs):
+    """Reads one frame from an open `mode`-style file.
+
+    Args:
+        filedesc: An open readable file object from a `mode` formatted file.
+        All other args are passed directly to the responsible io function.
 
     Returns:
-        Generator over the json trajectory, that yields
-        Atoms objects with the appropriate atom labels, masses and positions.
+        A dictionary as returned by `read_to_dict`.
     """
+
+    reader = _get_io_function(mode, "read")
+
+    return read_to_dict(*reader(filedesc=filedesc, **kwargs), output=output)
+
+
+def read_file_name(filename):
+    """Read one frame from file, guessing its format from the extension.
+
+    Args:
+        filename: Name of input file.
+
+    Returns:
+        A dictionary with 'atoms', 'cell' and 'comment'.
+    """
+
+    return read_file(os.path.splitext(filename)[1], open(filename))
+
+
+def iter_file(mode, filedesc, output="objects", **kwargs):
+    """Takes an open `mode`-style file and yields one Atoms object after another.
+
+    Args:
+        filedesc: An open readable file object from a `mode` formatted file.
+
+    Returns:
+        Generator of frames dictionaries, as returned by `read_to_dict`.
+    """
+
+    reader = _get_io_function(mode, "read")
 
     try:
         while True:
-            yield read_json(filedesc, **kwargs)
+            yield read_to_dict(*reader(filedesc=filedesc, **kwargs), output=output)
     except EOFError:
         pass
+
+
+def iter_file_name(filename):
+    """Open a trajectory file, guessing its format from the extension.
+
+    Args:
+        filename: Filename of a trajectory file.
+
+    Returns:
+        Generator of frames (dictionary with 'atoms', 'cell' and 'comment') from the trajectory in `filename`.
+    """
+
+    return iter_file(os.path.splitext(filename)[1], open(filename))
 
 
 def genh2abc(h):
@@ -209,21 +297,21 @@ def genh2abc(h):
    Takes the representation of the system box in terms of a full matrix
    of row vectors, and returns the representation in terms of the
    lattice vector lengths and the angles between them in radians.
-   
+
    Args:
       h: Cell matrix in upper triangular column vector form.
 
    Returns:
       A list containing the lattice vector lengths and the angles between them.
    """
-   
+
    a = math.sqrt(np.dot(h[0],h[0]))
    b = math.sqrt(np.dot(h[1],h[1]))
    c = math.sqrt(np.dot(h[2],h[2]))
    gamma = math.acos(np.dot(h[0],h[1])/(a*b))
    beta  =  math.acos(np.dot(h[0],h[2])/(a*c))
    alpha = math.acos(np.dot(h[2],h[1])/(b*c))
-   
+
    return a, b, c, alpha, beta, gamma
 
 
