@@ -10,7 +10,7 @@ according to the terms contained in the LICENSE file.
 """
 
 from vqmd.mddata import mddata
-from vqmd.mddata.ipi_readers import *
+from vqmd.lib.ipilib import *
 from vqmd.mddata.warnings import *
 import os
 
