@@ -1,8 +1,3 @@
-import sys
-from PyQt5 import QtWidgets
+from .gui import *
 
-app = QtWidgets.QApplication(sys.argv)
-label = QtWidgets.QLabel("Hello world!")
-
-label.show()
-sys.exit(app.exec_())
+__all__ = ['gui']
