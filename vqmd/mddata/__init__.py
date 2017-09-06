@@ -15,10 +15,11 @@ import bisect
 
 from vqmd.mddata.warnings import *
 
+
 class mddata(object):
 
     # constant system scalar/vector/matrix properties
-    csspnames = ['label', 'npart', 'nbead', 'ndim',
+    csspnames = ['label', 'npart', 'nbead',
                 'volume', 'density', 'wseitzr']
     csvpnames = []
     csmpnames = ['cellmat']
@@ -45,9 +46,10 @@ class mddata(object):
     tbspnames = []
     tbvpnames = ['bpos', 'bvel', 'bfrc', 'bmom']
 
-    def __init__(self, label, npart, nbead, ndim, kwdict = {}, **kwargs):
 
-        propdict = ({'label' : label, 'npart' : npart, 'nbead' : nbead, 'ndim' : ndim})
+    def __init__(self, label, npart, nbead, kwdict = {}, **kwargs):
+
+        propdict = ({'label' : label, 'npart' : npart, 'nbead' : nbead})
         propdict.update(kwdict)
         propdict.update(kwargs)
 
@@ -72,6 +74,7 @@ class mddata(object):
 
         self.set_props(propdict)
 
+
     def set_props(self, kwdict):
 
         for name in kwdict:
@@ -94,7 +97,7 @@ class mddata(object):
                     continue
 
             elif name in self.__class__.csvpnames:
-                if np.shape(newprop) == (self.ndim,):
+                if np.shape(newprop) == (3,):
                     newprop = np.array(newprop, dtype=float)
                     self.csvprops.append(name)
                 else:
@@ -102,7 +105,7 @@ class mddata(object):
                     continue
 
             elif name in self.__class__.csmpnames:
-                if np.shape(newprop) == (self.ndim, self.ndim):
+                if np.shape(newprop) == (3, 3):
                     newprop = np.array(newprop, dtype=float)
                     self.csmprops.append(name)
                 else:
@@ -119,7 +122,7 @@ class mddata(object):
                     continue
 
             elif name in self.__class__.ccvpnames:
-                if np.shape(newprop) == (self.npart, self.ndim):
+                if np.shape(newprop) == (self.npart, 3):
                     newprop = np.array(newprop, dtype=float)
                     self.ccvprops.append(name)
                 else:
@@ -135,7 +138,7 @@ class mddata(object):
                     continue
 
             elif name in self.__class__.cbvpnames:
-                if np.shape(newprop) == (self.npart, self.nbead, self.ndim):
+                if np.shape(newprop) == (self.npart, self.nbead, 3):
                     newprop = np.array(newprop, dtype=float)
                     self.cbvprops.append(name)
                 else:
@@ -151,7 +154,7 @@ class mddata(object):
                     continue
 
             elif name in self.__class__.tsvpnames:
-                if np.shape(newprop) == (2, tlen) and all(np.shape(tprop) == (self.ndim,) for tprop in newprop[1]):
+                if np.shape(newprop) == (2, tlen) and all(np.shape(tprop) == (3,) for tprop in newprop[1]):
                     flat_prop = [item for sublist in newprop[1] for item in sublist]
                     mindex = pd.MultiIndex.from_product([newprop[0], ['x','y','z']], names=['Time', 'Dim'])
                     newprop = pd.Series(flat_prop, index = mindex, name = name)
@@ -161,7 +164,7 @@ class mddata(object):
                     continue
 
             elif name in self.__class__.tsmpnames:
-                if np.shape(newprop) == (2, tlen) and all(np.shape(tprop) == (self.ndim, self.ndim) for tprop in newprop[1]):
+                if np.shape(newprop) == (2, tlen) and all(np.shape(tprop) == (3, 3) for tprop in newprop[1]):
                     flat_prop = [item for sublist1 in newprop[1] for sublist2 in sublist1 for item in sublist2]
                     mindex = pd.MultiIndex.from_product([newprop[0], ['x','y','z'], ['x','y','z']], names=['Time', 'Dim1', 'Dim2'])
                     newprop = pd.Series(flat_prop, index = mindex, name = name)
@@ -173,7 +176,7 @@ class mddata(object):
             elif name in self.__class__.tcspnames:
                 if np.shape(newprop) == (2, tlen) and all(np.shape(tprop) == (self.npart,) for tprop in newprop[1]):
                     flat_prop = [item for sublist in newprop[1] for item in sublist]
-                    mindex = pd.MultiIndex.from_product([newprop[0], np.arange(1,self.npart+1)], names=['Time', 'Atom'])
+                    mindex = pd.MultiIndex.from_product([newprop[0], np.arange(self.npart)], names=['Time', 'Atom'])
                     newprop = pd.Series(flat_prop, index = mindex, name = name)
                     self.tcsprops.append(name)
                 else:
@@ -181,9 +184,9 @@ class mddata(object):
                     continue
 
             elif name in self.__class__.tcvpnames:
-                if np.shape(newprop) == (2, tlen) and all(np.shape(tprop) == (self.npart, self.ndim) for tprop in newprop[1]):
+                if np.shape(newprop) == (2, tlen) and all(np.shape(tprop) == (self.npart, 3) for tprop in newprop[1]):
                     flat_prop = [item for sublist1 in newprop[1] for sublist2 in sublist1 for item in sublist2]
-                    mindex = pd.MultiIndex.from_product([newprop[0], np.arange(1,self.npart+1), ['x', 'y', 'z']], names=['Time', 'Atom', 'Dim'])
+                    mindex = pd.MultiIndex.from_product([newprop[0], np.arange(self.npart), ['x', 'y', 'z']], names=['Time', 'Atom', 'Dim'])
                     newprop = pd.Series(flat_prop, index = mindex, name = name)
                     self.tcvprops.append(name)
                 else:
@@ -193,7 +196,7 @@ class mddata(object):
             elif name in self.__class__.tbspnames:
                 if np.shape(newprop) == (2, tlen) and all(np.shape(tprop) == (self.npart, self.nbead) for tprop in newprop[1]):
                     flat_prop = [item for sublist1 in newprop[1] for sublist2 in sublist1 for item in sublist2]
-                    mindex = pd.MultiIndex.from_product([newprop[0], np.arange(1,self.npart+1), np.arange(1,self.nbead+1)], names=['Time', 'Atom', 'Bead'])
+                    mindex = pd.MultiIndex.from_product([newprop[0], np.arange(self.npart), np.arange(self.nbead)], names=['Time', 'Atom', 'Bead'])
                     newprop = pd.Series(flat_prop, index = mindex, name = name)
                     self.tbsprops.append(name)
                 else:
@@ -201,9 +204,9 @@ class mddata(object):
                     continue
 
             elif name in self.__class__.tbvpnames:
-                if np.shape(newprop) == (2, tlen) and all(np.shape(tprop) == (self.npart, self.nbead, self.ndim) for tprop in newprop[1]):
+                if np.shape(newprop) == (2, tlen) and all(np.shape(tprop) == (self.npart, self.nbead, 3) for tprop in newprop[1]):
                     flat_prop = [item for sublist1 in newprop[1] for sublist2 in sublist1 for sublist3 in sublist2 for item in sublist3]
-                    mindex = pd.MultiIndex.from_product([newprop[0], np.arange(1,self.npart+1), np.arange(1,self.nbead+1), ['x', 'y', 'z']], names=['Time', 'Atom', 'Bead', 'Dim'])
+                    mindex = pd.MultiIndex.from_product([newprop[0], np.arange(self.npart), np.arange(self.nbead), ['x', 'y', 'z']], names=['Time', 'Atom', 'Bead', 'Dim'])
                     newprop = pd.Series(flat_prop, index = mindex, name = name)
                     self.tbvprops.append(name)
                 else:
@@ -226,11 +229,13 @@ class mddata(object):
 
         self.__dict__['props'] = self.cprops + self.tprops
 
+
     def __setattr__(self, name, value):
         if name in dir(self):
             warn_prop_immutable(self.__class__.__name__, name)
         else:
             self.set_props({name : value})
+
 
     def __getattr__(self, name): # called if attribute is not found by other means (in self.__dict__, @property method...)
         try:
@@ -251,6 +256,7 @@ class mddata(object):
 
         return object.__getattribute__(self, name) # if successfull we can return
 
+
     def depcheck_callback(self, name, deps, calcfun):
         for dep in deps:
             if not hasattr(self, dep): # if not, getattr gets invoked implicitly and there calcset will be tried
@@ -261,12 +267,27 @@ class mddata(object):
         setattr(self, name, calcfun(*arglist))
         return True
 
+
     @staticmethod
     def calc_volume(cellmat):
         return np.abs(np.dot(np.cross(cellmat[0], cellmat[1]), cellmat[2]))
 
     def calcset_volume(self):
         return self.depcheck_callback('volume', ['cellmat'], mddata.calc_volume)
+
+
+    @staticmethod
+    def calc_tvolume(tcellmat):
+        times = []
+        tvolume = []
+        for time, data in tcellmat.groupby('Time'):
+            times.append(time)
+            tvolume.append(mddata.calc_volume(data[time].values.reshape(3,3)))
+        return [times, tvolume]
+
+    def calcset_tvolume(self):
+        return self.depcheck_callback('tvolume', ['tcellmat'], mddata.calc_tvolume)
+
 
     @staticmethod
     def calc_density(volume, masses):
@@ -281,10 +302,45 @@ class mddata(object):
             warn_prop_missdep(self.__class__.__name__, 'density', 'cmasses or bmasses')
         return False
 
+
+    @staticmethod
+    def calc_tdensity(tvolume, masses):
+        times = []
+        tdensity = []
+        for time, data in tvolume.groupby('Time'):
+            times.append(time)
+            tdensity.append(mddata.calc_density(data[time], masses))
+        return [times, tdensity]
+
+    def calcset_tdensity(self):
+        if hasattr(self, 'cmasses'):
+            return self.depcheck_callback('tdensity', ['tvolume', 'cmasses'], mddata.calc_tdensity)
+        elif hasattr(self, 'bmasses'):
+            return self.depcheck_callback('tdensity', ['tvolume', 'bmasses'], mddata.calc_tdensity)
+        else:
+            warn_prop_missdep(self.__class__.__name__, 'tdensity', 'cmasses or bmasses')
+        return False
+
     @staticmethod
     def calc_wseitzr(npart, volume):
         return (3.0 * volume / (4.0 * np.pi * npart)) ** (1.0/3.0)
 
     def calcset_wseitzr(self):
         return self.depcheck_callback('wseitzr', ['npart', 'volume'], mddata.calc_wseitzr)
+
+
+    @staticmethod
+    def calc_twseitzr(npart, tvolume):
+        times = []
+        twseitzr = []
+        for time, data in tvolume.groupby('Time'):
+            times.append(time)
+            twseitzr.append(mddata.calc_wseitzr(npart, data[time]))
+        return [times, twseitzr]
+
+    def calcset_twseitzr(self):
+        return self.depcheck_callback('twseitzr', ['npart', 'tvolume'], mddata.calc_twseitzr)
+
+
+
 

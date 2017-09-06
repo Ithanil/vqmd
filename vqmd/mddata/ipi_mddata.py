@@ -31,9 +31,8 @@ class ipi_mddata(mddata):
 
         npart = seriesdict.pop('npart', 1)
         nbead = seriesdict.pop('nbead', 1)
-        ndim = seriesdict.pop('ndim', 3)
 
-        super(ipi_mddata, self).__init__(path, npart, nbead, ndim, seriesdict)
+        super(ipi_mddata, self).__init__(path, npart, nbead, seriesdict)
 
 
 def parse_mdfile(path):
@@ -119,16 +118,15 @@ def parse_traj_centroid(path, suffix, name, timelist):
         trajfile = path + '.' + suffix
         trajdata = list(iter_file_name(trajfile))
 
-        trajdict['ndim'] = 3
         trajdict['npart'] = trajdata[0]['natoms']
         trajdict['cmasses'] = trajdata[0]['masses']
         trajdict['names'] = trajdata[0]['names']
         trajdict['cellmat'] = trajdata[0]['cell']
 
-        #tcellmatlist = [idict["cell"] for idict in trajdata]
-        trajlist = [idict['data'].reshape(trajdict['npart'], trajdict['ndim']) for idict in trajdata]
+        tcellmatlist = [idict['cell'] for idict in trajdata]
+        trajlist = [idict['data'].reshape(trajdict['npart'], 3) for idict in trajdata]
 
-        #trajdict['tcellmat'] = [timelist, tcellmatlist]
+        trajdict['tcellmat'] = [timelist, tcellmatlist]
         trajdict[name] = [timelist, trajlist]
 
     except(FileNotFoundError):
