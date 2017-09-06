@@ -14,19 +14,6 @@ from vqmd.lib.ipilib import *
 from vqmd.mddata.warnings import *
 import os
 
-def append_idict(vlist, llist, idict, iname):
-    # Appends to list vlist a float value from line split list llist,
-    # found at the index specified by the value to key iname in idict.
-    if iname in idict:
-        vlist.append(float(llist[int(idict[iname])-1]))
-        return 0
-    else:
-        return 1
-
-def append_idict_lists(listdict, llist, idict):
-    # Calls append_idict for key(names)/value(lists) pairs from listdict
-    for iname in listdict:
-        append_idict(listdict[iname], llist, idict, iname)
 
 class ipi_mddata(mddata):
 
@@ -36,85 +23,131 @@ class ipi_mddata(mddata):
 
     def __init__(self, dirpath, fprefix):
 
-        timelist = []
-        consqlist = []
-        templist = []
-        epotlist = []
-        ekinmdlist = []
-        ekincvlist = []
-        pressmdlist = []
-        presscvlist = []
-        radgyrlist = []
-        espringlist = []
-
-        lnamedict = {
-            'time'         : timelist,
-            'conserved'    : consqlist,
-            'temperature'  : templist,
-            'potential'    : epotlist,
-            'kinetic_md'   : ekinmdlist,
-            'kinetic_cv'   : ekincvlist,
-            'pressure_md'  : pressmdlist,
-            'pressure_cv'  : presscvlist,
-            'r_gyration'   : radgyrlist,
-            'spring'       : espringlist
-        }
-
-        obsdict = {}
-
         path = dirpath+'/'+fprefix
 
-        try:
-            with open(path + '.md') as mdfile:
-                for line in mdfile:
-                    spaceline = line.replace('{',' ')
-                    linelist = spaceline.split()
+        timelist, seriesdict = parse_mdfile(path)
 
-                    if linelist[0] == '#':
-                        obsdict[linelist[4]] = linelist[2]
+        seriesdict.update(parse_trajectories(path, timelist))
 
-                    else:
-                        append_idict_lists(lnamedict, linelist, obsdict)
-        except(FileNotFoundError):
-            warn_file_not_found(path + '.md')
+        npart = seriesdict.pop('npart', 1)
+        nbead = seriesdict.pop('nbead', 1)
+        ndim = seriesdict.pop('ndim', 3)
 
-        kwnamedict = {
-            'conserved' : 'consqty',
-            'temperature' : 'temp',
-            'potential' : 'epot',
-            'kinetic_md' : 'ekin_md',
-            'kinetic_cv' : 'ekin',
-            'pressure_md' : 'press_md',
-            'pressure_cv' : 'press',
-            'r_gyration' : 'radgyr',
-            'spring' : 'espring'
-        }
+        super(ipi_mddata, self).__init__(path, npart, nbead, ndim, seriesdict)
 
-        seriesdict = {}
 
-        for vname,vlist in lnamedict.items():
-            if vname in obsdict and vname in kwnamedict:
-                seriesdict[kwnamedict[vname]] = [timelist, vlist]
+def parse_mdfile(path):
 
-        natom = 1
-        nbead = 1
-        ndim = 3
+    mddict = {}
+    timelist = []
 
-        cposfile = path + '.pos.xyz'
-        if os.path.exists(cposfile):
-            cposdata = list(iter_file_name(cposfile))
+    consqlist = []
+    templist = []
+    epotlist = []
+    ekinmdlist = []
+    ekincvlist = []
+    pressmdlist = []
+    presscvlist = []
+    radgyrlist = []
+    espringlist = []
 
-            natom = cposdata[0]["natoms"]
-            cmasses = cposdata[0]["masses"]
-            names = cposdata[0]["names"]
-            cellmat = cposdata[0]["cell"]
-            #tcellmatlist = [idict["cell"] for idict in cposdata]
-            cposlist = [idict["data"].reshape(natom, ndim) for idict in cposdata]
+    lnamedict = {
+        'time'         : timelist,
+        'conserved'    : consqlist,
+        'temperature'  : templist,
+        'potential'    : epotlist,
+        'kinetic_md'   : ekinmdlist,
+        'kinetic_cv'   : ekincvlist,
+        'pressure_md'  : pressmdlist,
+        'pressure_cv'  : presscvlist,
+        'r_gyration'   : radgyrlist,
+        'spring'       : espringlist
+    }
 
-            seriesdict['cmasses'] = cmasses
-            seriesdict['names'] = names
-            seriesdict['cellmat'] = cellmat
-            #seriesdict['tcellmat'] = [timelist, tcellmatlist]
-            seriesdict['cpos'] = [timelist, cposlist]
+    kwnamedict = {
+        'conserved' : 'consqty',
+        'temperature' : 'temp',
+        'potential' : 'epot',
+        'kinetic_md' : 'ekin_md',
+        'kinetic_cv' : 'ekin',
+        'pressure_md' : 'press_md',
+        'pressure_cv' : 'press',
+        'r_gyration' : 'radgyr',
+        'spring' : 'espring'
+    }
 
-        super(ipi_mddata, self).__init__(path, natom, nbead, ndim, seriesdict)
+    obsdict = {}
+
+    try:
+        with open(path + '.md') as mdfile:
+            for line in mdfile:
+                spaceline = line.replace('{',' ')
+                linelist = spaceline.split()
+
+                if linelist[0] == '#':
+                    obsdict[linelist[4]] = linelist[2]
+
+                else:
+                    append_idict_lists(lnamedict, linelist, obsdict)
+    except(FileNotFoundError):
+        warn_file_not_found(path + '.md')
+
+
+    for vname,vlist in lnamedict.items():
+        if vname in obsdict and vname in kwnamedict:
+            mddict[kwnamedict[vname]] = [timelist, vlist]
+
+    return timelist, mddict
+
+
+def parse_trajectories(path, timelist):
+
+    trajsdict = {}
+
+    trajsdict.update(parse_traj_centroid(path, 'pos.xyz', 'cpos', timelist))
+    trajsdict.update(parse_traj_centroid(path, 'vel.xyz', 'cvel', timelist))
+    trajsdict.update(parse_traj_centroid(path, 'frc.xyz', 'cfrc', timelist))
+
+    return trajsdict
+
+
+def parse_traj_centroid(path, suffix, name, timelist):
+
+    trajdict = {}
+
+    try:
+        trajfile = path + '.' + suffix
+        trajdata = list(iter_file_name(trajfile))
+
+        trajdict['ndim'] = 3
+        trajdict['npart'] = trajdata[0]['natoms']
+        trajdict['cmasses'] = trajdata[0]['masses']
+        trajdict['names'] = trajdata[0]['names']
+        trajdict['cellmat'] = trajdata[0]['cell']
+
+        #tcellmatlist = [idict["cell"] for idict in trajdata]
+        trajlist = [idict['data'].reshape(trajdict['npart'], trajdict['ndim']) for idict in trajdata]
+
+        #trajdict['tcellmat'] = [timelist, tcellmatlist]
+        trajdict[name] = [timelist, trajlist]
+
+    except(FileNotFoundError):
+        pass
+
+    return trajdict
+
+
+def append_idict(vlist, llist, idict, iname):
+    # Appends to list vlist a float value from line split list llist,
+    # found at the index specified by the value to key iname in idict.
+    if iname in idict:
+        vlist.append(float(llist[int(idict[iname])-1]))
+        return 0
+    else:
+        return 1
+
+
+def append_idict_lists(listdict, llist, idict):
+    # Calls append_idict for key(names)/value(lists) pairs from listdict
+    for iname in listdict:
+        append_idict(listdict[iname], llist, idict, iname)
