@@ -19,7 +19,7 @@ class data(object):
 
     def __init__(self, xmlin, core, **kwargs):
 
-        self.data = mddata('N/A', 0, 0, 0) # Defaults to empty mddata
+        self.data = mddata('N/A', 0, 0) # Defaults to empty mddata
 
         dodata = True # Only if dodata stays true we read data
 
