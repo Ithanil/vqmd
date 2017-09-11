@@ -341,5 +341,54 @@ class mddata(object):
         return self.depcheck_callback('twseitzr', ['npart', 'tvolume'], mddata.calc_twseitzr)
 
 
+    @staticmethod
+    def calc_ekin_cl(npart, cmasses, cvel):
+        times = cvel.index.levels[0]
+        ekin = []
+        for time in times:
+            ekinhelp = 0
+            for ia in range(npart):
+                ekinhelp += 0.5 * cmasses[ia] * np.dot(cvel[time][ia], cvel[time][ia])
+            ekin.append(ekinhelp)
+        return [times, ekin]
+
+    @staticmethod
+    def calc_ekin_pi(npart, nbead, bmasses, bvel):
+        times = bvel.index.levels[0]
+        ekin = []
+        for time in times:
+            ekinhelp = 0
+            for ia in range(npart):
+                for ib in range(nbead):
+                    ekinhelp += 0.5 * bmasses[ia][ib] * np.dot(bvel[time][ia][ib], bvel[time][ia][ib])
+            ekin.append(ekinhelp)
+        return [times, ekin]
+
+    def calcset_ekin(self):
+        if hasattr(self, 'bvel') and hasattr(self, 'bmasses'):
+            return self.depcheck_callback('ekin', ['npart', 'nbead', 'bmasses', 'bvel'], mddata.calc_ekin_pi)
+        elif hasattr(self, 'cvel') and hasattr(self, 'cmasses'):
+            return self.depcheck_callback('ekin', ['npart', 'cmasses', 'cvel'], mddata.calc_ekin_cl)
+        else:
+            warn_prop_missdep(self.__class__.__name__, 'ekin', 'bvel+bmasses or cvel+cmasses')
+        return False
 
 
+    @staticmethod
+    def calc_etot(epot, ekin):
+        etot = epot + ekin
+        return [etot.index.values, etot.values]
+
+    def calcset_etot(self):
+        return self.depcheck_callback('etot', ['epot', 'ekin'], mddata.calc_etot)
+
+
+    @staticmethod
+    def calc_temp(npart, nbead, ekin):
+        times = ekin.index.values
+        temp = ekin.values / npart / nbead / 1.5
+        print(temp)
+        return [times, temp]
+
+    def calcset_temp(self):
+        return self.depcheck_callback('temp', ['npart', 'nbead', 'ekin'], mddata.calc_temp)
