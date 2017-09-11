@@ -278,11 +278,11 @@ class mddata(object):
 
     @staticmethod
     def calc_tvolume(tcellmat):
-        times = []
+        times = tcellmat.index.levels[0]
         tvolume = []
-        for time, data in tcellmat.groupby('Time'):
-            times.append(time)
-            tvolume.append(mddata.calc_volume(data[time].values.reshape(3,3)))
+        print(times)
+        for time in times:
+            tvolume.append(mddata.calc_volume(tcellmat[time].values.reshape(3,3)))
         return [times, tvolume]
 
     def calcset_tvolume(self):
@@ -305,11 +305,10 @@ class mddata(object):
 
     @staticmethod
     def calc_tdensity(tvolume, masses):
-        times = []
+        times = tvolume.index.values
         tdensity = []
-        for time, data in tvolume.groupby('Time'):
-            times.append(time)
-            tdensity.append(mddata.calc_density(data[time], masses))
+        for time in times:
+            tdensity.append(mddata.calc_density(tvolume[time], masses))
         return [times, tdensity]
 
     def calcset_tdensity(self):
@@ -321,6 +320,7 @@ class mddata(object):
             warn_prop_missdep(self.__class__.__name__, 'tdensity', 'cmasses or bmasses')
         return False
 
+
     @staticmethod
     def calc_wseitzr(npart, volume):
         return (3.0 * volume / (4.0 * np.pi * npart)) ** (1.0/3.0)
@@ -331,11 +331,10 @@ class mddata(object):
 
     @staticmethod
     def calc_twseitzr(npart, tvolume):
-        times = []
+        times = tvolume.index.values
         twseitzr = []
-        for time, data in tvolume.groupby('Time'):
-            times.append(time)
-            twseitzr.append(mddata.calc_wseitzr(npart, data[time]))
+        for time in times:
+            twseitzr.append(mddata.calc_wseitzr(npart, tvolume[time]))
         return [times, twseitzr]
 
     def calcset_twseitzr(self):
