@@ -130,19 +130,19 @@ class mddata(object):
                     continue
 
             elif name in self.__class__.cbspnames:
-                if np.shape(newprop) == (self.npart, self.nbead):
+                if np.shape(newprop) == (self.nbead, self.npart):
                     newprop = np.array(newprop, dtype=float)
                     self.cbsprops.append(name)
                 else:
-                    warn_prop_isnot('Constant bead scalar', name, 'a list with shape (npart, nbead)')
+                    warn_prop_isnot('Constant bead scalar', name, 'a list with shape (nbead, npart)')
                     continue
 
             elif name in self.__class__.cbvpnames:
-                if np.shape(newprop) == (self.npart, self.nbead, 3):
+                if np.shape(newprop) == (self.nbead, self.npart, 3):
                     newprop = np.array(newprop, dtype=float)
                     self.cbvprops.append(name)
                 else:
-                    warn_prop_isnot('Constant bead vector', name, 'a list with shape (npart, nbead, ndim)')
+                    warn_prop_isnot('Constant bead vector', name, 'a list with shape (nbead, npart, ndim)')
                     continue
 
             elif name in self.__class__.tsspnames:
@@ -194,23 +194,23 @@ class mddata(object):
                     continue
 
             elif name in self.__class__.tbspnames:
-                if np.shape(newprop) == (2, tlen) and all(np.shape(tprop) == (self.npart, self.nbead) for tprop in newprop[1]):
+                if np.shape(newprop) == (2, tlen) and all(np.shape(tprop) == (self.nbead, self.npart) for tprop in newprop[1]):
                     flat_prop = [item for sublist1 in newprop[1] for sublist2 in sublist1 for item in sublist2]
-                    mindex = pd.MultiIndex.from_product([newprop[0], np.arange(self.npart), np.arange(self.nbead)], names=['Time', 'Atom', 'Bead'])
+                    mindex = pd.MultiIndex.from_product([newprop[0], np.arange(self.nbead), np.arange(self.npart)], names=['Time', 'Bead', 'Atom'])
                     newprop = pd.Series(flat_prop, index = mindex, name = name)
                     self.tbsprops.append(name)
                 else:
-                    warn_prop_isnot('Time-dependent bead scalar', name, 'a list with shape (2, *, npart, nbead)')
+                    warn_prop_isnot('Time-dependent bead scalar', name, 'a list with shape (2, *, nbead, npart)')
                     continue
 
             elif name in self.__class__.tbvpnames:
-                if np.shape(newprop) == (2, tlen) and all(np.shape(tprop) == (self.npart, self.nbead, 3) for tprop in newprop[1]):
+                if np.shape(newprop) == (2, tlen) and all(np.shape(tprop) == (self.nbead, self.npart, 3) for tprop in newprop[1]):
                     flat_prop = [item for sublist1 in newprop[1] for sublist2 in sublist1 for sublist3 in sublist2 for item in sublist3]
-                    mindex = pd.MultiIndex.from_product([newprop[0], np.arange(self.npart), np.arange(self.nbead), ['x', 'y', 'z']], names=['Time', 'Atom', 'Bead', 'Dim'])
+                    mindex = pd.MultiIndex.from_product([newprop[0], np.arange(self.nbead), np.arange(self.npart), ['x', 'y', 'z']], names=['Time', 'Bead', 'Atom', 'Dim'])
                     newprop = pd.Series(flat_prop, index = mindex, name = name)
                     self.tbvprops.append(name)
                 else:
-                    warn_prop_isnot('Time-dependent bead vector', name, 'a list with shape (2, *, npart, nbead, ndim)')
+                    warn_prop_isnot('Time-dependent bead vector', name, 'a list with shape (2, *, nbead, npart, ndim)')
                     continue
 
             else:
@@ -358,9 +358,9 @@ class mddata(object):
         ekin = []
         for time in times:
             ekinhelp = 0
-            for ia in range(npart):
-                for ib in range(nbead):
-                    ekinhelp += 0.5 * bmasses[ia][ib] * np.dot(bvel[time][ia][ib], bvel[time][ia][ib])
+            for ib in range(nbead):
+                for ia in range(npart):
+                    ekinhelp += 0.5 * bmasses[ib][ia] * np.dot(bvel[time][ib][ia], bvel[time][ib][ia])
             ekin.append(ekinhelp)
         return [times, ekin]
 
