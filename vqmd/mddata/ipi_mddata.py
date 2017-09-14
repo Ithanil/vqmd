@@ -107,6 +107,10 @@ def parse_trajectories(path, timelist):
     trajsdict.update(parse_traj_centroid(path, 'vel.xyz', 'cvel', timelist))
     trajsdict.update(parse_traj_centroid(path, 'frc.xyz', 'cfrc', timelist))
 
+    trajsdict.update(parse_traj_bead(path, 'pos', 'xyz', 'bpos', timelist))
+    trajsdict.update(parse_traj_bead(path, 'vel', 'xyz', 'bvel', timelist))
+    trajsdict.update(parse_traj_bead(path, 'frc', 'xyz', 'bfrc', timelist))
+
     return trajsdict
 
 
@@ -133,6 +137,43 @@ def parse_traj_centroid(path, suffix, name, timelist):
         pass
 
     return trajdict
+
+
+def parse_traj_bead(path, suffix, format, name, timelist):
+
+    trajdict = {}
+    btrajlist = []
+    ibead = 0
+
+    while True:
+        try:
+            trajfile = path + '.' + suffix + '_' + str(ibead) + '.' + format
+            trajdata = list(iter_file_name(trajfile))
+
+            if ibead == 0:
+                trajdict['npart'] = trajdata[0]['natoms']
+                trajdict['cmasses'] = trajdata[0]['masses']
+                trajdict['names'] = trajdata[0]['names']
+                trajdict['cellmat'] = trajdata[0]['cell']
+
+                tcellmatlist = [idict['cell'] for idict in trajdata]
+                trajdict['tcellmat'] = [timelist, tcellmatlist]
+            btrajlist.append( [idict['data'].reshape(trajdict['npart'], 3) for idict in trajdata] )
+            ibead += 1
+
+        except(FileNotFoundError):
+            if ibead > 0:
+                trajlist = [] # Now the properly shaped list is constructed
+                for step in range(len(btrajlist[0])):
+                    steplist = []
+                    for bead in range(ibead):
+                        steplist.append(btrajlist[bead][step])
+                    trajlist.append(steplist)
+
+                trajdict['nbead'] = ibead
+                trajdict[name] = [timelist, trajlist]
+
+            return trajdict
 
 
 def append_idict(vlist, llist, idict, iname):
